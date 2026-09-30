@@ -1,6 +1,19 @@
-# DevFusion — Fullstack Developer Portfolio
+<div align="center">
+  <img src="public/og-image.png" alt="DevFusion Portfolio Banner" width="100%" style="border-radius: 12px; margin-bottom: 20px;" />
 
-A bilingual (English 🇬🇧 / French 🇫🇷) fullstack portfolio website for a fullstack developer, built from a dark, orange-accented reference design. Next.js 16 + Tailwind CSS 4 + shadcn/ui on the front, Prisma + SQLite on the back, with a working contact inbox, database-driven projects & testimonials, and a live visitor counter.
+  # DevFusion — Fullstack Developer Portfolio
+  
+  <p align="center">
+    <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" />
+    <img src="https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white" alt="Cloudflare" />
+    <img src="https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white" alt="Prisma" />
+    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
+  </p>
+
+  <p align="center">
+    A bilingual (English 🇬🇧 / French 🇫🇷) fullstack portfolio website for a fullstack developer, built from a dark, orange-accented reference design. Next.js 16 + Tailwind CSS 4 + shadcn/ui on the front, Prisma + SQLite on the back, with a working contact inbox, database-driven projects & testimonials, and a live visitor counter.
+  </p>
+</div>
 
 ---
 
