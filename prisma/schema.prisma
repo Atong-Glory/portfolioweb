@@ -1,0 +1,74 @@
+// DevFusion Portfolio — Database Schema
+// Powers: contact form, DB-driven projects, testimonials, live visitor analytics
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Inbox for the "Let's Build Something Amazing Together" contact form
+model ContactMessage {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  projectType String   @default("Not specified")
+  budgetRange String   @default("Not specified")
+  message     String
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+// Featured projects rendered in "Some of My Recent Work" (DB-driven, mini-CMS ready)
+model Project {
+  id                String   @id @default(cuid())
+  title             String   @unique
+  slug              String   @unique
+  description       String
+  descriptionFr     String?
+  longDescription   String?
+  longDescriptionFr String?
+  metrics           String? // JSON array: [{ "label": "...", "value": "..." }]
+  image             String
+  tags              String
+  category          String   @default("Web App")
+  categoryFr        String?
+  demoUrl           String?
+  githubUrl         String?
+  featured          Boolean  @default(false)
+  sortOrder         Int      @default(0)
+  createdAt         DateTime @default(now())
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  role      String
+  roleFr    String?
+  company   String
+  quote     String
+  quoteFr   String?
+  rating    Int      @default(5)
+  initials  String
+  gradient  String   @default("from-orange-500 to-amber-600")
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model VisitorStat {
+  id        String   @id @default("home")
+  path      String   @unique @default("/")
+  views     Int      @default(0)
+  updatedAt DateTime @updatedAt
+}
+
+// Simple IP rate limiting for contact form (D1 / SQLite)
+model RateLimitBucket {
+  id        String   @id
+  count     Int      @default(1)
+  expiresAt DateTime
+}
