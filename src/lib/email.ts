@@ -19,7 +19,7 @@ export async function notifyContactLead(payload: ContactPayload): Promise<void> 
     from: process.env.RESEND_FROM ?? `${SITE_NAME} <onboarding@resend.dev>`,
     to: [to],
     replyTo: payload.email,
-    subject: `[DevFusion] New lead from ${payload.name}`,
+    subject: `[RHIZORA TECH] New lead from ${payload.name}`,
     text: [
       `Name: ${payload.name}`,
       `Email: ${payload.email}`,

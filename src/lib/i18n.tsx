@@ -1,4 +1,4 @@
-// DevFusion Portfolio — i18n dictionaries (EN / FR)
+// RHIZORA TECH Portfolio — i18n dictionaries (EN / FR)
 // Single source of truth for every piece of UI copy on the site.
 // DB-driven content (projects, testimonials) carries parallel FR fields
 // in the database and falls back to English when a translation is missing.
@@ -7,7 +7,7 @@ export type Lang = 'en' | 'fr'
 
 const en = {
   meta: {
-    title: 'Atong Glory — Frontend Developer & Designer | DevFusion Portfolio',
+    title: 'Atong Glory — Frontend Developer & Designer | RHIZORA TECH Portfolio',
   },
   nav: {
     skipToContent: 'Skip to content',
@@ -202,7 +202,7 @@ export type Dictionary = typeof en
 
 const fr: Dictionary = {
   meta: {
-    title: 'Atong Glory — Développeur Frontend & Designer | Portfolio DevFusion',
+    title: 'Atong Glory — Développeur Frontend & Designer | Portfolio RHIZORA TECH',
   },
   nav: {
     skipToContent: 'Aller au contenu',

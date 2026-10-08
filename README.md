@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="public/og-image.png" alt="DevFusion Portfolio Banner" width="100%" style="border-radius: 12px; margin-bottom: 20px;" />
+  <img src="public/og-image.png" alt="RHIZORA TECH Portfolio Banner" width="100%" style="border-radius: 12px; margin-bottom: 20px;" />
 
-  # DevFusion — Fullstack Developer Portfolio
+  # RHIZORA TECH — Fullstack Developer Portfolio
   
   <p align="center">
     <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" />
@@ -171,7 +171,7 @@ The project is **already wired for Cloudflare** — OpenNext config, Wrangler co
 ### Step 1 — Create the D1 database
 
 ```bash
-npx wrangler d1 create devfusion-portfolio
+npx wrangler d1 create rhizora-tech-portfolio
 # Copy the database_id printed in the output
 ```
 
@@ -184,19 +184,19 @@ Open [`wrangler.jsonc`](wrangler.jsonc) and replace `"REPLACE_WITH_YOUR_D1_DATAB
 npm run db:push:d1
 
 # Remote D1 (production):
-npx wrangler d1 execute devfusion-portfolio --remote --file=./prisma/d1-schema.sql
+npx wrangler d1 execute rhizora-tech-portfolio --remote --file=./prisma/d1-schema.sql
 ```
 
 ### Step 3 — Seed demo content
 
 ```bash
 # Remote D1:
-npx wrangler d1 execute devfusion-portfolio --remote --file=./prisma/d1-seed.sql
+npx wrangler d1 execute rhizora-tech-portfolio --remote --file=./prisma/d1-seed.sql
 ```
 
 ### Step 4 — Set environment variables in Cloudflare
 
-Go to **Cloudflare Dashboard → Workers & Pages → devfusion-portfolio → Settings → Variables**.
+Go to **Cloudflare Dashboard → Workers & Pages → rhizora-tech-portfolio → Settings → Variables**.
 Add every secret from `.env.example` (the _"Server-only secrets"_ section). At minimum:
 
 | Variable | Where to get it |

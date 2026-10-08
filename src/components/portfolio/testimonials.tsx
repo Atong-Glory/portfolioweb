@@ -91,7 +91,7 @@ export function Testimonials() {
             <div
               ref={rowRef}
               onScroll={onScroll}
-              className="df-snap-row mt-12 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2 md:grid md:grid-cols-2 md:overflow-visible xl:grid-cols-3"
+              className="rt-snap-row mt-12 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2 md:grid md:grid-cols-2 md:overflow-visible xl:grid-cols-3"
             >
               {testimonials.map((item) => {
                 const quote = lang === 'fr' ? item.quoteFr ?? item.quote : item.quote

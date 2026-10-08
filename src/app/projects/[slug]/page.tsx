@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     if (!project) return {}
     const url = `${SITE_URL}/projects/${slug}`
     return {
-      title: `${project.title} | DevFusion Portfolio`,
+      title: `${project.title} | RHIZORA TECH Portfolio`,
       description: project.description,
       openGraph: {
         title: project.title,

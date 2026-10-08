@@ -13,8 +13,8 @@ type I18nContextValue = {
 
 const I18nContext = createContext<I18nContextValue | null>(null)
 
-const STORAGE_KEY = 'df-lang'
-const LANG_EVENT = 'df-lang-change'
+const STORAGE_KEY = 'rt-lang'
+const LANG_EVENT = 'rt-lang-change'
 
 /* ---------- Language preference as an external store (localStorage) ----------
  * useSyncExternalStore keeps this lint-clean and hydration-safe:

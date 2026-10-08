@@ -1,10 +1,10 @@
 #!/bin/bash
-# Package the DevFusion portfolio into a downloadable zip with a clean top-level folder.
+# Package the RHIZORA TECH portfolio into a downloadable zip with a clean top-level folder.
 set -e
 
 ROOT=/home/z/my-project
-STAGE=$ROOT/.zip-stage/devfusion-portfolio
-OUT=$ROOT/download/devfusion-portfolio.zip
+STAGE=$ROOT/.zip-stage/rhizora-tech-portfolio
+OUT=$ROOT/download/rhizora-tech-portfolio.zip
 
 # Clean previous staging + output
 rm -rf "$ROOT/.zip-stage"
@@ -41,9 +41,9 @@ if grep -R "/home/z" "$STAGE/.env.example" "$STAGE/README.md" "$STAGE/package.js
   echo "ERROR: sandbox-absolute path leaked into shipped files"; exit 1
 fi
 
-# Build the zip (from staging parent so the archive has a top-level devfusion-portfolio/)
+# Build the zip (from staging parent so the archive has a top-level rhizora-tech-portfolio/)
 cd "$ROOT/.zip-stage"
-zip -r -9 -q "$OUT" devfusion-portfolio \
+zip -r -9 -q "$OUT" rhizora-tech-portfolio \
   -x "*.DS_Store" "*__MACOSX*"
 
 # Cleanup staging

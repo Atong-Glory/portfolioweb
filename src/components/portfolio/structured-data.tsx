@@ -55,7 +55,7 @@ export function StructuredData() {
         "@id": `${SITE_URL}/#website`,
         url: SITE_URL,
         name: SITE_NAME,
-        alternateName: "DevFusion Portfolio",
+        alternateName: "RHIZORA TECH Portfolio",
         description: SITE_DESCRIPTION,
         inLanguage: "en",
         publisher: { "@id": `${SITE_URL}/#person` },

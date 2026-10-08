@@ -49,7 +49,7 @@ function TypingLine({ words }: { words: string[] }) {
   return (
     <p className="font-display mt-4 flex min-h-[2.2rem] items-center text-xl font-medium text-body sm:text-2xl">
       <span>{typed}</span>
-      <span className="df-caret ml-1 inline-block h-6 w-[2px] bg-orange-500" aria-hidden="true" />
+      <span className="rt-caret ml-1 inline-block h-6 w-[2px] bg-orange-500" aria-hidden="true" />
     </p>
   )
 }
@@ -62,10 +62,10 @@ const SOCIALS = [
 ]
 
 const BADGES = [
-  { name: 'React.js', Icon: ReactIcon, className: 'right-2 top-10 sm:right-8 df-float' },
-  { name: 'Node.js', Icon: NodeIcon, className: 'left-0 top-[36%] df-float-delay-1' },
-  { name: 'TypeScript', Icon: TypeScriptIcon, className: 'left-2 bottom-[16%] df-float-delay-2' },
-  { name: 'MongoDB', Icon: MongoDBIcon, className: 'right-3 bottom-[4%] df-float-delay-3' },
+  { name: 'React.js', Icon: ReactIcon, className: 'right-2 top-10 sm:right-8 rt-float' },
+  { name: 'Node.js', Icon: NodeIcon, className: 'left-0 top-[36%] rt-float-delay-1' },
+  { name: 'TypeScript', Icon: TypeScriptIcon, className: 'left-2 bottom-[16%] rt-float-delay-2' },
+  { name: 'MongoDB', Icon: MongoDBIcon, className: 'right-3 bottom-[4%] rt-float-delay-3' },
 ]
 
 export function Hero() {
@@ -74,7 +74,7 @@ export function Hero() {
   return (
     <section id="home" className="relative overflow-hidden bg-base">
       {/* Decorative background: blueprint grid + glow orbs */}
-      <div className="df-grid-bg absolute inset-0" aria-hidden="true" />
+      <div className="rt-grid-bg absolute inset-0" aria-hidden="true" />
       <div
         className="absolute -top-32 left-1/2 h-[480px] w-[720px] -translate-x-1/2 rounded-full bg-orange-500/10 blur-[140px]"
         aria-hidden="true"
@@ -131,7 +131,7 @@ export function Hero() {
           {/* Availability */}
           <div className="mt-7 flex items-center gap-2.5 text-[13px] font-medium uppercase tracking-wider text-body">
             <span className="relative flex h-2.5 w-2.5">
-              <span className="df-ping-soft absolute inline-flex h-full w-full rounded-full bg-emerald-400" />
+              <span className="rt-ping-soft absolute inline-flex h-full w-full rounded-full bg-emerald-400" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
             </span>
             {t.hero.available}
@@ -163,7 +163,7 @@ export function Hero() {
         >
           {/* Glow + rings */}
           <div
-            className="df-glow-pulse absolute left-1/2 top-1/2 h-[92%] w-[92%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-500/25 blur-[90px]"
+            className="rt-glow-pulse absolute left-1/2 top-1/2 h-[92%] w-[92%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-500/25 blur-[90px]"
             aria-hidden="true"
           />
           <div
@@ -171,7 +171,7 @@ export function Hero() {
             aria-hidden="true"
           />
           <div
-            className="df-spin-slow absolute left-1/2 top-1/2 h-[110%] w-[110%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-orange-500/25"
+            className="rt-spin-slow absolute left-1/2 top-1/2 h-[110%] w-[110%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-orange-500/25"
             aria-hidden="true"
           >
             <span className="absolute left-1/2 top-[-5px] h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.9)]" />

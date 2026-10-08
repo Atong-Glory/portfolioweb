@@ -1,6 +1,6 @@
--- DevFusion Portfolio — Cloudflare D1 Schema
+-- RHIZORA TECH Portfolio — Cloudflare D1 Schema
 -- Run against a local D1:  npm run db:push:d1
--- Run against remote D1:   wrangler d1 execute devfusion-portfolio --remote --file=./prisma/d1-schema.sql
+-- Run against remote D1:   wrangler d1 execute RHIZORA TECH-portfolio --remote --file=./prisma/d1-schema.sql
 --
 -- This file mirrors prisma/schema.prisma exactly.
 -- Re-generate after any schema change by running:

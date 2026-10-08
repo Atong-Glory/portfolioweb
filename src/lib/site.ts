@@ -1,10 +1,10 @@
-// DevFusion Portfolio — single source of truth for site identity constants.
+// RHIZORA TECH Portfolio — single source of truth for site identity constants.
 
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://atongglory.pages.dev'
 ).replace(/\/+$/, '')
 
-export const SITE_NAME = 'Atong Glory — DevFusion Portfolio'
+export const SITE_NAME = 'Atong Glory — RHIZORA TECH Portfolio'
 
 export const SITE_EMAIL = 'atongglory17@gmail.com'
 
@@ -27,6 +27,6 @@ export const SOCIAL_LINKS = [
 export const SITE_DESCRIPTION =
   'Portfolio of Atong Glory — Frontend Developer, UI/UX & Graphics Designer. Fast, responsive websites and web apps built with React, Next.js, TypeScript and Tailwind CSS. Clean code, pixel-perfect interfaces and human-centered design.'
 
-export const SITE_TITLE = 'Atong Glory — Frontend Developer & Designer | DevFusion Portfolio'
+export const SITE_TITLE = 'Atong Glory — Frontend Developer & Designer | RHIZORA TECH Portfolio'
 
 export const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ''

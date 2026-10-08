@@ -4,7 +4,7 @@ import Link from "next/link";
 // Server component on purpose: it must render even when JS is unavailable.
 export default function NotFound() {
   return (
-    <div className="df-root flex min-h-screen flex-col items-center justify-center bg-base px-6 text-center font-sans text-body">
+    <div className="rt-root flex min-h-screen flex-col items-center justify-center bg-base px-6 text-center font-sans text-body">
       <p
         aria-hidden="true"
         className="bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text font-display text-7xl font-extrabold tracking-tight text-transparent sm:text-8xl"

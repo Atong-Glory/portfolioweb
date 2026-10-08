@@ -1,5 +1,5 @@
 {
-  "name": "devfusion-portfolio",
+  "name": "rhizora-tech-portfolio",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -17,8 +17,8 @@
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset",
     "db:seed": "npx tsx scripts/seed.ts",
-    "db:seed:d1": "wrangler d1 execute devfusion-portfolio --local --file=./prisma/d1-seed.sql",
-    "db:push:d1": "wrangler d1 execute devfusion-portfolio --local --file=./prisma/d1-schema.sql"
+    "db:seed:d1": "wrangler d1 execute rhizora-tech-portfolio --local --file=./prisma/d1-seed.sql",
+    "db:push:d1": "wrangler d1 execute rhizora-tech-portfolio --local --file=./prisma/d1-schema.sql"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

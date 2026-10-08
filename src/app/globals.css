@@ -42,41 +42,41 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* DevFusion semantic palette — swapped by .dark / html.light (see below) */
-  --color-base: var(--df-base);              /* page canvas (darkest)      */
-  --color-surface: var(--df-surface);        /* alternate section bg       */
-  --color-panel: var(--df-panel);            /* cards, inputs, badges      */
-  --color-panel-hover: var(--df-panel-hover);
-  --color-deep: var(--df-deep);              /* footer canvas              */
-  --color-ink: var(--df-ink);                /* primary text               */
-  --color-body: var(--df-body);              /* prominent body text        */
-  --color-soft: var(--df-soft);              /* secondary body text        */
-  --color-faint: var(--df-faint);            /* tertiary / placeholders    */
-  --color-edge: var(--df-edge);              /* hairline borders           */
-  --color-edge-strong: var(--df-edge-strong);
-  --color-wash: var(--df-wash);              /* subtle fills               */
-  --color-wash-strong: var(--df-wash-strong);
+  /* RHIZORA TECH semantic palette — swapped by .dark / html.light (see below) */
+  --color-base: var(--rt-base);              /* page canvas (darkest)      */
+  --color-surface: var(--rt-surface);        /* alternate section bg       */
+  --color-panel: var(--rt-panel);            /* cards, inputs, badges      */
+  --color-panel-hover: var(--rt-panel-hover);
+  --color-deep: var(--rt-deep);              /* footer canvas              */
+  --color-ink: var(--rt-ink);                /* primary text               */
+  --color-body: var(--rt-body);              /* prominent body text        */
+  --color-soft: var(--rt-soft);              /* secondary body text        */
+  --color-faint: var(--rt-faint);            /* tertiary / placeholders    */
+  --color-edge: var(--rt-edge);              /* hairline borders           */
+  --color-edge-strong: var(--rt-edge-strong);
+  --color-wash: var(--rt-wash);              /* subtle fills               */
+  --color-wash-strong: var(--rt-wash-strong);
 }
 
 :root {
   --radius: 0.625rem;
 
-  /* ---------- DevFusion LIGHT (default when no class / html.light) ---------- */
-  --df-base: #f7f5f1;
-  --df-surface: #efebe4;
-  --df-panel: #ffffff;
-  --df-panel-hover: #faf5ee;
-  --df-deep: #e9e4db;
-  --df-ink: #131a26;
-  --df-body: #3d4757;
-  --df-soft: #5c6675;
-  --df-faint: #7d8794;
-  --df-edge: rgba(19, 26, 38, 0.08);
-  --df-edge-strong: rgba(19, 26, 38, 0.15);
-  --df-wash: rgba(19, 26, 38, 0.045);
-  --df-wash-strong: rgba(19, 26, 38, 0.09);
+  /* ---------- RHIZORA TECH LIGHT (default when no class / html.light) ---------- */
+  --rt-base: #f7f5f1;
+  --rt-surface: #efebe4;
+  --rt-panel: #ffffff;
+  --rt-panel-hover: #faf5ee;
+  --rt-deep: #e9e4db;
+  --rt-ink: #131a26;
+  --rt-body: #3d4757;
+  --rt-soft: #5c6675;
+  --rt-faint: #7d8794;
+  --rt-edge: rgba(19, 26, 38, 0.08);
+  --rt-edge-strong: rgba(19, 26, 38, 0.15);
+  --rt-wash: rgba(19, 26, 38, 0.045);
+  --rt-wash-strong: rgba(19, 26, 38, 0.09);
 
-  /* shadcn primitives — DevFusion LIGHT */
+  /* shadcn primitives — RHIZORA TECH LIGHT */
   --background: #f7f5f1;
   --foreground: #131a26;
   --card: #ffffff;
@@ -111,22 +111,22 @@
 }
 
 .dark {
-  /* ---------- DevFusion DARK (html.dark — the site's signature look) ---------- */
-  --df-base: #05070c;
-  --df-surface: #0a0d14;
-  --df-panel: #0d1119;
-  --df-panel-hover: #10141f;
-  --df-deep: #04060a;
-  --df-ink: #ffffff;
-  --df-body: #cbd5e1;
-  --df-soft: #94a3b8;
-  --df-faint: #64748b;
-  --df-edge: rgba(255, 255, 255, 0.07);
-  --df-edge-strong: rgba(255, 255, 255, 0.14);
-  --df-wash: rgba(255, 255, 255, 0.05);
-  --df-wash-strong: rgba(255, 255, 255, 0.1);
+  /* ---------- RHIZORA TECH DARK (html.dark — the site's signature look) ---------- */
+  --rt-base: #05070c;
+  --rt-surface: #0a0d14;
+  --rt-panel: #0d1119;
+  --rt-panel-hover: #10141f;
+  --rt-deep: #04060a;
+  --rt-ink: #ffffff;
+  --rt-body: #cbd5e1;
+  --rt-soft: #94a3b8;
+  --rt-faint: #64748b;
+  --rt-edge: rgba(255, 255, 255, 0.07);
+  --rt-edge-strong: rgba(255, 255, 255, 0.14);
+  --rt-wash: rgba(255, 255, 255, 0.05);
+  --rt-wash-strong: rgba(255, 255, 255, 0.1);
 
-  /* shadcn primitives — DevFusion DARK */
+  /* shadcn primitives — RHIZORA TECH DARK */
   --background: #05070c;
   --foreground: #f4f7fb;
   --card: #0d1119;
@@ -170,7 +170,7 @@
 }
 
 /* ============================================================
-   DevFusion Portfolio — custom theme & animations
+   RHIZORA TECH Portfolio — custom theme & animations
    ============================================================ */
 
 .font-display {
@@ -181,7 +181,7 @@
 }
 
 /* Dark canvas + subtle blueprint grid */
-.df-grid-bg {
+.rt-grid-bg {
   background-image:
     linear-gradient(rgba(249, 115, 22, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(249, 115, 22, 0.05) 1px, transparent 1px);
@@ -189,67 +189,67 @@
   mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, black 30%, transparent 75%);
 }
 
-.df-noise {
+.rt-noise {
   background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
   background-size: 22px 22px;
 }
-html.light .df-noise {
+html.light .rt-noise {
   background-image: radial-gradient(rgba(19, 26, 38, 0.055) 1px, transparent 1px);
 }
 
 /* Floating tech badges */
-@keyframes df-float {
+@keyframes rt-float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-12px); }
 }
-.df-float { animation: df-float 5s ease-in-out infinite; }
-.df-float-delay-1 { animation: df-float 6s ease-in-out 0.8s infinite; }
-.df-float-delay-2 { animation: df-float 5.5s ease-in-out 1.6s infinite; }
-.df-float-delay-3 { animation: df-float 6.5s ease-in-out 2.4s infinite; }
+.rt-float { animation: rt-float 5s ease-in-out infinite; }
+.rt-float-delay-1 { animation: rt-float 6s ease-in-out 0.8s infinite; }
+.rt-float-delay-2 { animation: rt-float 5.5s ease-in-out 1.6s infinite; }
+.rt-float-delay-3 { animation: rt-float 6.5s ease-in-out 2.4s infinite; }
 
 /* Slow orbit ring */
-@keyframes df-spin-slow {
+@keyframes rt-spin-slow {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-.df-spin-slow { animation: df-spin-slow 24s linear infinite; }
+.rt-spin-slow { animation: rt-spin-slow 24s linear infinite; }
 
 /* Orange glow pulse behind the hero ring */
-@keyframes df-glow-pulse {
+@keyframes rt-glow-pulse {
   0%, 100% { opacity: 0.45; transform: scale(1); }
   50% { opacity: 0.75; transform: scale(1.06); }
 }
-.df-glow-pulse { animation: df-glow-pulse 4.5s ease-in-out infinite; }
+.rt-glow-pulse { animation: rt-glow-pulse 4.5s ease-in-out infinite; }
 
 /* Typing caret */
-@keyframes df-blink {
+@keyframes rt-blink {
   0%, 45% { opacity: 1; }
   50%, 100% { opacity: 0; }
 }
-.df-caret { animation: df-blink 1s step-end infinite; }
+.rt-caret { animation: rt-blink 1s step-end infinite; }
 
 /* Pulsing availability dot */
-@keyframes df-ping-soft {
+@keyframes rt-ping-soft {
   0% { transform: scale(1); opacity: 0.9; }
   80%, 100% { transform: scale(2.4); opacity: 0; }
 }
-.df-ping-soft { animation: df-ping-soft 1.8s cubic-bezier(0, 0, 0.2, 1) infinite; }
+.rt-ping-soft { animation: rt-ping-soft 1.8s cubic-bezier(0, 0, 0.2, 1) infinite; }
 
 /* Orange selection */
-.df-root ::selection {
+.rt-root ::selection {
   background: rgba(249, 115, 22, 0.35);
   color: #fff;
 }
-html.light .df-root ::selection {
+html.light .rt-root ::selection {
   color: #131a26;
 }
 
 /* Thin styled scrollbar for mobile testimonial snap row */
-.df-snap-row {
+.rt-snap-row {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-.df-snap-row::-webkit-scrollbar { display: none; }
+.rt-snap-row::-webkit-scrollbar { display: none; }
 
 /* Smooth anchor scrolling with sticky-nav offset */
 html {

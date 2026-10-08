@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DevFusion portfolio — SEO/brand asset generator (PIL, no network).
+"""RHIZORA TECH portfolio — SEO/brand asset generator (PIL, no network).
 
 Outputs (all under public/):
   og-image.png               1200x630  Open Graph / Twitter card
@@ -76,7 +76,7 @@ def make_og():
 
     # top-left brand pill
     f_pill = font(BOLD, 22)
-    pill_text = "DEVFUSION PORTFOLIO"
+    pill_text = "RHIZORA TECH PORTFOLIO"
     tw = d.textlength(pill_text, font=f_pill)
     px, py = 70, 66
     d.rounded_rectangle(

@@ -67,7 +67,7 @@ export function About() {
           <Reveal delay={0.15}>
             <div className="relative overflow-hidden rounded-2xl border border-edge bg-panel p-8 sm:p-10">
               {/* Decorative map-ish dots */}
-              <div className="df-noise absolute inset-0 opacity-60" aria-hidden="true" />
+              <div className="rt-noise absolute inset-0 opacity-60" aria-hidden="true" />
               <div
                 className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-orange-500/10 blur-3xl"
                 aria-hidden="true"

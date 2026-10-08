@@ -1,6 +1,6 @@
--- DevFusion Portfolio — Cloudflare D1 Seed Data
+-- RHIZORA TECH Portfolio — Cloudflare D1 Seed Data
 -- Run against a local D1:  npm run db:seed:d1
--- Run against remote D1:   wrangler d1 execute devfusion-portfolio --remote --file=./prisma/d1-seed.sql
+-- Run against remote D1:   wrangler d1 execute RHIZORA TECH-portfolio --remote --file=./prisma/d1-seed.sql
 --
 -- Uses INSERT OR REPLACE so it is safe to re-run (idempotent).
 -- Matches the data in scripts/seed.ts exactly.

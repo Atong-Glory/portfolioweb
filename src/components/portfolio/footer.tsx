@@ -24,14 +24,14 @@ export function Footer() {
 
   // Live visitor counter — counts this visit once per session (stored in SQLite)
   useEffect(() => {
-    const counted = sessionStorage.getItem('df-counted')
+    const counted = sessionStorage.getItem('rt-counted')
     const url = counted ? '/api/stats' : '/api/stats?count=1'
     fetch(url)
       .then((r) => r.json() as Promise<any>)
       .then((d) => {
         if (d.success) {
           setViews(d.views)
-          sessionStorage.setItem('df-counted', '1')
+          sessionStorage.setItem('rt-counted', '1')
         }
       })
       .catch(() => {})
@@ -50,7 +50,7 @@ export function Footer() {
                 </svg>
               </span>
               <span className="font-display text-lg font-bold tracking-wide text-ink">
-                DEV<span className="text-orange-500">FUSION</span>
+                RHIZORA <span className="text-orange-500">TECH</span>
               </span>
             </a>
             <p className="mt-4 text-sm leading-relaxed text-soft">

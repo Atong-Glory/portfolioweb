@@ -122,7 +122,7 @@ export function AdminDashboard() {
     <div className="min-h-screen bg-[#0a0e17] text-slate-200">
       <header className="border-b border-white/10 px-6 py-4 flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-white">DevFusion Admin</h1>
+          <h1 className="text-xl font-bold text-white">RHIZORA TECH Admin</h1>
           <p className="text-sm text-slate-400">Inbox, projects & testimonials</p>
         </div>
         <div className="flex gap-2">

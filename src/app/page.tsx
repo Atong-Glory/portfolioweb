@@ -55,7 +55,7 @@ export default function Home() {
     <LanguageProvider>
       <MotionConfig reducedMotion="user">
         <SkipLink />
-        <div className="df-root min-h-screen bg-base font-sans text-body flex flex-col">
+        <div className="rt-root min-h-screen bg-base font-sans text-body flex flex-col">
           <Navbar />
           <main id="main" className="flex-1">
             <Hero />

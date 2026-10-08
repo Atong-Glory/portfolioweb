@@ -78,7 +78,7 @@ export function Navbar() {
             </svg>
           </span>
           <span className="font-display text-lg font-bold tracking-wide text-ink">
-            DEV<span className="text-orange-500">FUSION</span>
+            RHIZORA <span className="text-orange-500">TECH</span>
           </span>
         </a>
 

@@ -41,7 +41,7 @@ export function CaseStudyView({ project }: { project: CaseStudyProject }) {
     .filter(Boolean)
 
   return (
-    <article className="df-root min-h-screen bg-base text-body">
+    <article className="rt-root min-h-screen bg-base text-body">
       <div className="mx-auto max-w-4xl px-5 py-16 lg:px-8 lg:py-24">
         <Link
           href="/#projects"
