@@ -52,3 +52,8 @@ prompt
 server.log
 # Skills directory
 /skills/
+
+# Cloudflare / OpenNext build output
+.open-next/
+.wrangler/
+replace.js
