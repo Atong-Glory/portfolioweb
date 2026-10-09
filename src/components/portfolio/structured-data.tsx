@@ -31,7 +31,7 @@ export function StructuredData() {
         description: SITE_DESCRIPTION,
         email: `mailto:${SITE_EMAIL}`,
         url: SITE_URL,
-        image: `${SITE_URL}/images/hero-portrait.png`,
+        image: `${SITE_URL}/images/hero-portrait.jpg`,
         sameAs: [...SOCIAL_LINKS],
         knowsLanguage: ["English", "French"],
         keywords:

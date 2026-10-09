@@ -180,7 +180,7 @@ export function Hero() {
           {/* Portrait */}
           <div className="relative aspect-square overflow-hidden rounded-full border-2 border-orange-500/40 bg-surface shadow-[0_0_80px_rgba(249,115,22,0.25)]">
             <img
-              src="/images/hero-portrait.png"
+              src="/images/hero-portrait.jpg"
               alt={t.hero.portraitAlt}
               className="h-full w-full scale-110 object-cover object-top"
             />
