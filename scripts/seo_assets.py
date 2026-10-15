@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""RHIZORA TECH portfolio — SEO/brand asset generator (PIL, no network).
+"""Atong Glory portfolio — SEO/brand asset generator (PIL, no network).
 
 Outputs (all under public/):
   og-image.png               1200x630  Open Graph / Twitter card
@@ -12,12 +12,30 @@ Outputs (all under public/):
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 from pathlib import Path
 
-PUBLIC = Path("/home/z/my-project/public")
+PUBLIC = Path(__file__).resolve().parents[1] / "public"
 ICONS = PUBLIC / "icons"
 ICONS.mkdir(parents=True, exist_ok=True)
 
-BOLD = "/usr/share/fonts/truetype/english/Carlito-Bold.ttf"
-REG = "/usr/share/fonts/truetype/english/Carlito-Regular.ttf"
+
+def find_font(paths):
+    return next((str(path) for path in paths if Path(path).is_file()), None)
+
+
+WINDOWS_FONTS = Path("C:/Windows/Fonts")
+BOLD = find_font(
+    [
+        WINDOWS_FONTS / "arialbd.ttf",
+        "/usr/share/fonts/truetype/carlito/Carlito-Bold.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    ]
+)
+REG = find_font(
+    [
+        WINDOWS_FONTS / "arial.ttf",
+        "/usr/share/fonts/truetype/carlito/Carlito-Regular.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    ]
+)
 
 # ---- palette (matches globals.css dark theme) ----
 BG_TOP = (12, 15, 23)      # #0c0f17
@@ -31,7 +49,9 @@ FAINT = (107, 118, 136)    # #6b7688
 
 
 def font(path, size):
-    return ImageFont.truetype(path, size)
+    if path:
+        return ImageFont.truetype(path, size)
+    return ImageFont.load_default(size=size)
 
 
 def vgrad(size, top, bottom):
@@ -76,7 +96,7 @@ def make_og():
 
     # top-left brand pill
     f_pill = font(BOLD, 22)
-    pill_text = "RHIZORA TECH PORTFOLIO"
+    pill_text = "FULL-STACK SOFTWARE ENGINEER"
     tw = d.textlength(pill_text, font=f_pill)
     px, py = 70, 66
     d.rounded_rectangle(
@@ -96,21 +116,20 @@ def make_og():
 
     # role line
     f_role = font(BOLD, 40)
-    d.text((70, 392), "Frontend Developer · UI/UX & Graphics Designer",
-           font=f_role, fill=SUBTLE)
+    d.text((70, 392), "Full-Stack Software Engineer", font=f_role, fill=SUBTLE)
 
     # tagline
     f_tag = font(REG, 29)
     d.text((70, 452),
-           "Building exceptional digital experiences with modern technologies.",
+           "A bilingual web application built with TypeScript, Prisma & Cloudflare.",
            font=f_tag, fill=FAINT)
 
     # footer row: email (left) + url (right)
     f_foot = font(REG, 26)
     d.text((70, 548), "atongglory17@gmail.com", font=f_foot, fill=(146, 156, 172))
-    url = "atongglory.vercel.app"
-    uw = d.textlength(url, font=f_foot)
-    d.text((W - 70 - uw, 548), url, font=f_foot, fill=ORANGE)
+    stack = "Next.js  ·  Prisma  ·  Cloudflare"
+    stack_width = d.textlength(stack, font=f_foot)
+    d.text((W - 70 - stack_width, 548), stack, font=f_foot, fill=ORANGE)
 
     img.convert("RGB").save(PUBLIC / "og-image.png", "PNG", optimize=True)
     print("og-image.png", img.size)

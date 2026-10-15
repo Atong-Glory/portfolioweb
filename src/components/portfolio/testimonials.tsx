@@ -18,6 +18,35 @@ type Testimonial = {
   gradient: string
 }
 
+function isTestimonial(value: unknown): value is Testimonial {
+  if (typeof value !== 'object' || value === null) return false
+  const item = value as Record<string, unknown>
+  return (
+    typeof item.id === 'string' &&
+    typeof item.name === 'string' &&
+    typeof item.role === 'string' &&
+    (typeof item.roleFr === 'string' || item.roleFr === null) &&
+    typeof item.company === 'string' &&
+    typeof item.quote === 'string' &&
+    (typeof item.quoteFr === 'string' || item.quoteFr === null) &&
+    typeof item.rating === 'number' &&
+    typeof item.initials === 'string' &&
+    typeof item.gradient === 'string'
+  )
+}
+
+function isTestimonialsResponse(
+  value: unknown
+): value is { success: true; testimonials: Testimonial[] } {
+  if (typeof value !== 'object' || value === null) return false
+  const response = value as Record<string, unknown>
+  return (
+    response.success === true &&
+    Array.isArray(response.testimonials) &&
+    response.testimonials.every(isTestimonial)
+  )
+}
+
 function Stars({ rating, ariaLabel }: { rating: number; ariaLabel: string }) {
   return (
     <div className="flex gap-1" aria-label={ariaLabel}>
@@ -42,17 +71,29 @@ export function Testimonials() {
   useEffect(() => {
     let cancelled = false
     fetch('/api/testimonials')
-      .then((res) => res.json() as Promise<any>)
-      .then((data) => {
+      .then(async (res) => {
+        const data: unknown = await res.json()
+        if (!res.ok || !isTestimonialsResponse(data)) {
+          throw new Error('Testimonial response was not valid')
+        }
+        return data
+      })
+      .then(({ testimonials: data }) => {
         if (cancelled) return
-        setTestimonials(data.testimonials ?? [])
+        setTestimonials(data)
         setLoading(false)
       })
-      .catch(() => !cancelled && setLoading(false))
+      .catch((err) => {
+        if (cancelled) return
+        console.error('[testimonials] Failed to load:', err)
+        setLoading(false)
+      })
     return () => {
       cancelled = true
     }
   }, [])
+
+  if (!loading && testimonials.length === 0) return null
 
   // Sync dots with horizontal scroll (mobile carousel)
   const onScroll = () => {

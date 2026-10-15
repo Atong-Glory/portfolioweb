@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Briefcase, Github, Linkedin, Twitter, Mail } from 'lucide-react'
-import { ReactIcon, NodeIcon, TypeScriptIcon, MongoDBIcon } from './tech-icons'
+import { ReactIcon, NodeIcon, TypeScriptIcon, NextIcon } from './tech-icons'
 import { useI18n } from './language-provider'
 
 function useTypingEffect(words: string[], typeSpeed = 75, deleteSpeed = 40, pause = 1800) {
@@ -65,7 +65,7 @@ const BADGES = [
   { name: 'React.js', Icon: ReactIcon, className: 'right-2 top-10 sm:right-8 rt-float' },
   { name: 'Node.js', Icon: NodeIcon, className: 'left-0 top-[36%] rt-float-delay-1' },
   { name: 'TypeScript', Icon: TypeScriptIcon, className: 'left-2 bottom-[16%] rt-float-delay-2' },
-  { name: 'MongoDB', Icon: MongoDBIcon, className: 'right-3 bottom-[4%] rt-float-delay-3' },
+  { name: 'Next.js', Icon: NextIcon, className: 'right-3 bottom-[4%] rt-float-delay-3' },
 ]
 
 export function Hero() {
@@ -128,17 +128,8 @@ export function Hero() {
             </a>
           </div>
 
-          {/* Availability */}
-          <div className="mt-7 flex items-center gap-2.5 text-[13px] font-medium uppercase tracking-wider text-body">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="rt-ping-soft absolute inline-flex h-full w-full rounded-full bg-emerald-400" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
-            </span>
-            {t.hero.available}
-          </div>
-
           {/* Socials */}
-          <div className="mt-5 flex items-center gap-3">
+          <div className="mt-7 flex items-center gap-3">
             {SOCIALS.map(({ href, label, Icon }) => (
               <a
                 key={label}

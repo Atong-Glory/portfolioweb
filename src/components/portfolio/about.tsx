@@ -1,17 +1,17 @@
 'use client'
 
-import { User, Mail, MapPin, Clock, Download } from 'lucide-react'
-import { Reveal, SectionHeader, Counter } from './shared'
+import { User, Mail, MapPin, Download } from 'lucide-react'
+import { Reveal, SectionHeader } from './shared'
 import { useI18n } from './language-provider'
+import { SITE_EMAIL } from '@/lib/site'
 
 export function About() {
   const { t } = useI18n()
 
   const INFO = [
     { Icon: User, label: t.about.info.name, value: t.about.info.nameValue },
-    { Icon: Mail, label: t.about.info.email, value: 'atongglory17@gmail.com' },
+    { Icon: Mail, label: t.about.info.email, value: SITE_EMAIL },
     { Icon: MapPin, label: t.about.info.location, value: t.about.info.locationValue },
-    { Icon: Clock, label: t.about.info.availability, value: t.about.info.availabilityValue },
   ]
 
   return (
@@ -34,22 +34,6 @@ export function About() {
                 {t.about.paragraphs[1]}
               </p>
             </Reveal>
-
-            {/* Stats */}
-            <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {t.about.stats.map(({ value, suffix, label }, i) => (
-                <Reveal key={label} delay={i * 0.08}>
-                  <div className="rounded-xl border border-edge bg-panel px-4 py-5 text-center transition-colors duration-300 hover:border-orange-500/30">
-                    <div className="font-display bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-3xl font-bold text-transparent">
-                      <Counter to={value} suffix={suffix} />
-                    </div>
-                    <div className="mt-1.5 text-[11px] font-medium uppercase tracking-wider text-soft">
-                      {label}
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
 
             <Reveal delay={0.2}>
               <a

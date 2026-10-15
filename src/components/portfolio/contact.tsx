@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useState } from 'react'
-import { Mail, Phone, MapPin, Clock, Send, Loader2, CalendarDays } from 'lucide-react'
+import { Mail, MapPin, Send, Loader2 } from 'lucide-react'
 import { Reveal, SectionHeader } from './shared'
 import { useI18n } from './language-provider'
 import { TurnstileWidget } from './turnstile-widget'
@@ -16,13 +16,12 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useToast } from '@/hooks/use-toast'
-import { SITE_PHONE, SITE_PHONE_TEL, SITE_CAL_URL } from '@/lib/site'
+import { SITE_EMAIL } from '@/lib/site'
 
 type FormState = {
   name: string
   email: string
   projectType: string
-  budgetRange: string
   message: string
 }
 
@@ -30,8 +29,13 @@ const INITIAL: FormState = {
   name: '',
   email: '',
   projectType: '',
-  budgetRange: '',
   message: '',
+}
+
+type ContactResponse = {
+  success?: boolean
+  message?: string
+  errors?: Partial<Record<keyof FormState, string>>
 }
 
 export function Contact() {
@@ -50,25 +54,13 @@ export function Contact() {
     {
       Icon: Mail,
       label: t.contact.info.email,
-      value: 'atongglory17@gmail.com',
-      href: 'mailto:atongglory17@gmail.com',
-    },
-    {
-      Icon: Phone,
-      label: t.contact.info.phone,
-      value: SITE_PHONE,
-      href: `tel:${SITE_PHONE_TEL}`,
+      value: SITE_EMAIL,
+      href: `mailto:${SITE_EMAIL}`,
     },
     {
       Icon: MapPin,
       label: t.contact.info.location,
       value: t.about.info.locationValue,
-      href: undefined,
-    },
-    {
-      Icon: Clock,
-      label: t.contact.info.responseTime,
-      value: t.contact.info.responseTimeValue,
       href: undefined,
     },
   ]
@@ -98,7 +90,7 @@ export function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, turnstileToken }),
       })
-      const data = (await res.json()) as any
+      const data = (await res.json()) as ContactResponse
 
       if (res.ok && data.success) {
         toast({
@@ -132,7 +124,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="relative bg-base">
+    <section id="contact" className="relative overflow-hidden bg-base">
       <div
         className="absolute left-1/2 top-0 h-[320px] w-[640px] -translate-x-1/2 rounded-full bg-orange-500/5 blur-[120px]"
         aria-hidden="true"
@@ -183,37 +175,20 @@ export function Contact() {
                 </div>
               </div>
 
-              <div className="grid gap-5 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label className="text-body">{t.contact.form.projectType}</Label>
-                  <Select value={form.projectType} onValueChange={(v) => set('projectType', v)}>
-                    <SelectTrigger className="h-12 border-edge-strong bg-panel text-ink data-[placeholder]:text-faint focus:ring-orange-500/50">
-                      <SelectValue placeholder={t.contact.form.projectTypePlaceholder} />
-                    </SelectTrigger>
-                    <SelectContent className="border-edge-strong bg-panel text-ink">
-                      {t.contact.projectTypes.map((type) => (
-                        <SelectItem key={type} value={type} className="focus:bg-orange-500/15 focus:text-orange-300">
-                          {type}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-body">{t.contact.form.budgetRange}</Label>
-                  <Select value={form.budgetRange} onValueChange={(v) => set('budgetRange', v)}>
-                    <SelectTrigger className="h-12 border-edge-strong bg-panel text-ink data-[placeholder]:text-faint focus:ring-orange-500/50">
-                      <SelectValue placeholder={t.contact.form.budgetRangePlaceholder} />
-                    </SelectTrigger>
-                    <SelectContent className="border-edge-strong bg-panel text-ink">
-                      {t.contact.budgets.map((budget) => (
-                        <SelectItem key={budget} value={budget} className="focus:bg-orange-500/15 focus:text-orange-300">
-                          {budget}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div className="space-y-2">
+                <Label className="text-body">{t.contact.form.projectType}</Label>
+                <Select value={form.projectType} onValueChange={(v) => set('projectType', v)}>
+                  <SelectTrigger className="h-12 border-edge-strong bg-panel text-ink data-[placeholder]:text-faint focus:ring-orange-500/50">
+                    <SelectValue placeholder={t.contact.form.projectTypePlaceholder} />
+                  </SelectTrigger>
+                  <SelectContent className="border-edge-strong bg-panel text-ink">
+                    {t.contact.projectTypes.map((type) => (
+                      <SelectItem key={type} value={type} className="focus:bg-orange-500/15 focus:text-orange-300">
+                        {type}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-2">
@@ -284,34 +259,12 @@ export function Contact() {
                 </div>
               ))}
 
-              {/* Cal.com / Calendly booking CTA */}
-              {SITE_CAL_URL && (
-                <a
-                  href={SITE_CAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 rounded-xl border border-orange-500/30 bg-orange-500/5 p-4 transition-all duration-300 hover:border-orange-500/60 hover:bg-orange-500/10 group"
-                >
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-orange-500/30 bg-orange-500/15 text-orange-400 transition-colors group-hover:bg-orange-500/25">
-                    <CalendarDays className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                  <div className="min-w-0">
-                    <div className="text-xs font-medium uppercase tracking-wider text-faint">
-                      Free discovery call
-                    </div>
-                    <div className="text-[15px] font-semibold text-orange-400 group-hover:text-orange-300 transition-colors">
-                      Book a free 15-min call →
-                    </div>
-                  </div>
-                </a>
-              )}
-
               <div className="rounded-xl border border-orange-500/20 bg-gradient-to-br from-orange-500/10 to-transparent p-5">
                 <p className="text-sm leading-relaxed text-body">
                   <span className="font-semibold text-orange-400">
-                    {t.contact.availabilityCard.strong}
+                    {t.contact.conversationCard.strong}
                   </span>{' '}
-                  {t.contact.availabilityCard.rest}
+                  {t.contact.conversationCard.rest}
                 </p>
               </div>
             </div>

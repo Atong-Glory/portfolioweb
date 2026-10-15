@@ -4,14 +4,16 @@ from reportlab.lib.units import mm
 from reportlab.lib.colors import HexColor
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import simpleSplit
+from pathlib import Path
 
 W, H = A4
+PUBLIC = Path(__file__).resolve().parents[1] / "public"
 ORANGE = HexColor("#f97316")
 DARK = HexColor("#0f172a")
 GRAY = HexColor("#475569")
 LIGHT = HexColor("#94a3b8")
 
-c = canvas.Canvas("/home/z/my-project/public/Atong-Glory-Resume.pdf", pagesize=A4)
+c = canvas.Canvas(str(PUBLIC / "Atong-Glory-Resume.pdf"), pagesize=A4)
 
 def txt(x, y, s, size=10, font="Helvetica", color=GRAY):
     c.setFont(font, size)
@@ -25,7 +27,7 @@ c.setFillColor(ORANGE)
 c.rect(0, H - 48*mm, W, 2*mm, fill=1, stroke=0)
 
 txt(20*mm, H - 20*mm, "ATONG GLORY", 26, "Helvetica-Bold", HexColor("#ffffff"))
-txt(20*mm, H - 26.5*mm, "Frontend Developer · UI/UX & Graphics Designer", 13, "Helvetica-Bold", ORANGE)
+txt(20*mm, H - 26.5*mm, "Full-Stack Software Engineer", 13, "Helvetica-Bold", ORANGE)
 txt(20*mm, H - 33*mm, "atongglory17@gmail.com   |   github.com/atongglory   |   linkedin.com/in/atongglory", 9, "Helvetica", LIGHT)
 
 y = H - 58*mm
@@ -49,36 +51,26 @@ def item(left, right):
     txt(W-20*mm, y, right, 9, "Helvetica", ORANGE)
     y -= 5.2*mm
 
-heading("Summary")
-para("Frontend Developer, UI/UX & Graphics Designer crafting fast, accessible and visually striking web interfaces. Blends clean code with strong visual design sense — from wireframes and mockups to pixel-perfect React builds. Problem-solver passionate about turning ideas into polished digital products people love to use.")
+heading("Profile")
+para("Full-stack software engineer focused on building useful web applications with TypeScript, React, and Next.js. This portfolio repository demonstrates a bilingual interface, database-backed content and contact routes, an admin area, and Cloudflare deployment configuration.")
 y -= 3*mm
 
-heading("Experience")
-item("Senior Full-Stack Developer — TechNova Labs", "2022 – Present")
-para("Lead development of a SaaS analytics platform serving 50k+ daily events. Built real-time dashboards with React and Node.js, cut API p95 latency by 40%, and mentor a team of 4 engineers.")
-y -= 2.5*mm
-item("Full-Stack Developer — BrightApps Studio", "2019 – 2022")
-para("Delivered 20+ client projects: e-commerce platforms, booking systems, and custom CMS builds. Owned features end-to-end from database schema to pixel-perfect UI.")
-y -= 2.5*mm
-item("Junior Web Developer — PixelWorks", "2018 – 2019")
-para("Developed responsive marketing sites and internal tools with JavaScript, React and Express.")
+heading("Selected Project")
+item("Bilingual Full-Stack Portfolio", "Self-directed")
+para("Built with Next.js, TypeScript, Prisma, and Tailwind CSS. The repository includes English and French UI content, project case-study routes, a contact inbox, protected admin routes, and local SQLite / Cloudflare D1 data access.")
 y -= 3*mm
 
-heading("Key Projects")
-item("Analytics Dashboard (React, TypeScript, Recharts)", "2024")
-para("Real-time KPI visualization platform with custom report builder and role-based access control.")
-y -= 2.5*mm
-item("E-Commerce Platform (Next.js, MongoDB, Stripe)", "2023")
-para("Full storefront with cart, payments, inventory admin and order tracking for 10k+ SKUs.")
+heading("Implementation highlights")
+para("Typed application routes, bilingual content, responsive UI, persistent contact submissions, optional Turnstile verification, rate limiting, and a documented Cloudflare Workers deployment path.")
 y -= 3*mm
 
-heading("Skills")
-para("JavaScript / TypeScript, React, Next.js, Node.js, Express, MongoDB, PostgreSQL, Tailwind CSS, AWS, Docker, GraphQL, Git, Jest")
+heading("Technologies in this repository")
+para("TypeScript, React, Next.js, Tailwind CSS, Prisma, SQLite, Cloudflare D1, Cloudflare Workers, OpenNext, Git")
 y -= 3*mm
 
-heading("Education")
-item("B.Sc. Computer Science — San Francisco State University", "2014 – 2018")
+heading("Contact")
+para("Email: atongglory17@gmail.com  |  GitHub: github.com/atongglory  |  LinkedIn: linkedin.com/in/atongglory")
 
-c.setTitle("Atong Glory — Frontend Developer Resume")
+c.setTitle("Atong Glory — Full-Stack Software Engineer")
 c.save()
 print("Resume PDF generated")

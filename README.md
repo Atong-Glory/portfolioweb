@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="public/og-image.png" alt="RHIZORA TECH Portfolio Banner" width="100%" style="border-radius: 12px; margin-bottom: 20px;" />
+  <img src="public/og-image.png" alt="Atong Glory — Full-Stack Software Engineer" width="100%" style="border-radius: 12px; margin-bottom: 20px;" />
 
-  # RHIZORA TECH — Fullstack Developer Portfolio
+  # Atong Glory — Full-Stack Software Engineer
   
   <p align="center">
     <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" />
@@ -11,7 +11,7 @@
   </p>
 
   <p align="center">
-    A bilingual (English 🇬🇧 / French 🇫🇷) fullstack portfolio website for a fullstack developer, built from a dark, orange-accented reference design. Next.js 16 + Tailwind CSS 4 + shadcn/ui on the front, Prisma + SQLite on the back, with a working contact inbox, database-driven projects & testimonials, and a live visitor counter.
+    A bilingual (English 🇬🇧 / French 🇫🇷) full-stack portfolio application built with Next.js, TypeScript, Prisma, and Cloudflare. The featured case study describes this repository; seeded fictional clients, project results, and testimonials have been removed.
   </p>
 </div>
 
@@ -22,14 +22,12 @@
 | Area | What you get |
 |------|--------------|
 | **Language toggler (EN–FR)** | One-click switch in the navbar (desktop + mobile). UI strings, DB content (projects, testimonials), tab title and `<html lang>` all switch instantly. Preference persists in `localStorage` and syncs across tabs. |
-| **Hero** | Typing-effect roles, glowing ring portrait, 4 floating tech badges, reading progress bar. |
-| **About** | Animated stat counters, info card, cursive signature, downloadable resume PDF. |
-| **Services / Skills** | 4 service cards; 6 animated skill bars with 15 hand-crafted SVG brand icons (no CDN dependency). |
-| **Projects** | Loaded from the database via `GET /api/projects`, with bilingual descriptions & categories, skeleton loading states. |
-| **Testimonials** | Database-driven, mobile snap-carousel with dots, bilingual quotes/roles. |
-| **Contact form** | Full validation (bilingual error messages), `POST /api/contact` → SQLite persistence, toast feedback ("Message sent!" / "Message envoyé"). |
-| **Live analytics** | `GET /api/stats` counts real visits (session-guarded) — shown as "visitor #N" in the footer. |
-| **Extras** | Scroll-spy navbar, scroll-reveal animations, fully responsive (390px+ verified), custom orange favicon. |
+| **Bilingual interface** | English and French copy with a persistent language toggle. |
+| **Full-stack case study** | The featured work is the portfolio application in this repository, described without fabricated client outcomes or performance figures. |
+| **Projects API** | Project cards and case studies use database-backed content with bilingual descriptions and an explicit empty/error state. |
+| **Contact form** | Bilingual validation, optional Turnstile verification, rate limiting, SQLite/D1 persistence, and optional email notification. |
+| **Admin** | GitHub-authenticated admin routes for portfolio content and the contact inbox. |
+| **SEO and accessibility** | Metadata, structured data, sitemap, keyboard navigation, reduced-motion support, and responsive layouts. |
 
 ## 🧱 Tech Stack
 
@@ -37,12 +35,12 @@
 - **Deploy target**: Cloudflare Workers via [OpenNext](https://opennext.js.org/cloudflare) (`opennextjs-cloudflare`)
 - **Styling**: Tailwind CSS 4, shadcn/ui components, custom keyframe animations
 - **Animations**: Framer Motion, CSS keyframes, typing effect
-- **Database**: Prisma ORM — Cloudflare D1 (production) / SQLite file (local dev)
+- **Database**: Prisma ORM — Cloudflare D1 (production) / SQLite file (local development)
 - **Auth**: NextAuth.js v4 with GitHub provider (guards `/admin`)
 - **Email**: Resend — notifies on every contact form submit
 - **Spam protection**: Cloudflare Turnstile (optional, gracefully disabled when keys not set)
 - **Rate limiting**: D1-backed IP bucket (5 msgs / hour per IP)
-- **Validation**: Zod
+- **Validation**: Zod schemas for admin content, server-side contact checks, and TypeScript
 - **Language**: TypeScript throughout
 - **Runtime**: Node.js ≥ 20 (Cloudflare remote build handles the Worker runtime)
 
@@ -66,14 +64,16 @@ bun dev              # or: npm run dev
 
 Open **http://localhost:3000** — done. The site starts in English; hit the **EN | FR** pill in the navbar to switch.
 
-### Database already includes
+### Seeded portfolio content
 
-3 bilingual projects, 3 bilingual testimonials. To reset/reseed:
+The local database includes one repository-backed portfolio case study and no testimonial data. The seed removes only the three known sample project records and three sample testimonial names from the original template; other project/testimonial records and contact messages are preserved. Add only verified work and testimonials through the admin tools or seed scripts. To refresh the local seed:
 
 ```bash
 bun run db:push      # recreate schema (or: npm run db:push)
-bun run db:seed      # seed demo content (or: npx tsx scripts/seed.ts)
+bun run db:seed      # seed the repository-backed project (or: npx tsx scripts/seed.ts)
 ```
+
+For Cloudflare D1, apply the current schema before `prisma/d1-seed.sql`. The seed removes only the known original template sample rows and does not run automatically during builds or deployment.
 
 ### Production build
 
@@ -87,8 +87,8 @@ bun run start        # serves the standalone build on port 3000
 | Method | Route | Description |
 |--------|-------|-------------|
 | `GET` | `/api/projects` | All projects (tags expanded, EN + FR fields) |
-| `GET` | `/api/testimonials` | All testimonials (EN + FR fields) |
-| `GET` | `/api/stats?count=1` | Live visitor counter (upserts a visit when `count=1`) |
+| `GET` | `/api/testimonials` | Published testimonial records (EN + FR fields) |
+| `GET` | `/api/stats?count=1` | Records a home-page visit when `count=1` |
 | `POST` | `/api/contact` | Validate + persist a contact message |
 | `GET` | `/api/contact` | List contact messages (admin/inbox use) |
 
@@ -98,6 +98,15 @@ bun run start        # serves the standalone build on port 3000
 - `src/components/portfolio/language-provider.tsx` — `LanguageProvider` + `useI18n()` + the `LanguageToggle` pill. State is kept in an external store read via `useSyncExternalStore` (hydration-safe: server always renders `en`, then the stored preference is picked up on the client).
 - Database content carries parallel columns (`descriptionFr`, `categoryFr`, `quoteFr`, `roleFr`). Components pick `lang === 'fr' ? fr-field ?? en-field : en-field`, so toggling never triggers a refetch.
 - `LanguageProvider` also renders a hoisted `<title>` so the tab title localizes (React 19-safe).
+
+## ✅ Checks
+
+```bash
+npm test
+npm run lint
+npx tsc --noEmit
+npm run build
+```
 
 ## 🔍 SEO (built in)
 
@@ -109,10 +118,10 @@ The site ships with a complete technical SEO layer:
 - **`/robots.txt`** (`src/app/robots.ts`) — allows everything except `/api/`, references the sitemap.
 - **`/sitemap.xml`** (`src/app/sitemap.ts`) — canonical homepage entry with EN/FR hreflang alternates.
 - **`/manifest.webmanifest`** (`src/app/manifest.ts`) — installable PWA manifest with the AG icons.
-- **Brand assets** — `public/og-image.png` (social share card), `public/icons/icon-{32,192,512}.png` + `apple-touch-icon.png` (regenerate with `python3 scripts/seo_assets.py`).
+- **Brand assets** — `public/og-image.png` (social share card), `public/icons/icon-{32,192,512}.png` + `apple-touch-icon.png` (regenerate with `python scripts/seo_assets.py` after `python -m pip install -r requirements.txt`).
 - **Semantic markup** — one `<h1>` per page, `alt` text on every image, `lang` attribute that follows the EN/FR toggle, `rel="noopener noreferrer"` on external links.
 
-> After deploying: point Google Search Console at the sitemap (`https://your-domain/sitemap.xml`), and update the social handles in `hero.tsx` / `footer.tsx` / `src/lib/site.ts` if yours differ from the `atongglory` placeholders.
+> Before launch: verify that the resume and social profile URLs in `hero.tsx` / `footer.tsx` / `src/lib/site.ts` belong to you, and set `NEXT_PUBLIC_SITE_URL` to the canonical domain. Then submit the sitemap to Google Search Console.
 
 ## ♿ UX & Accessibility
 
@@ -143,9 +152,10 @@ The site ships with a complete technical SEO layer:
 │   └── lib/                # i18n dictionaries, prisma client, utils
 ├── prisma/schema.prisma    # ContactMessage, Project, Testimonial, VisitorStat
 ├── db/custom.db            # pre-seeded SQLite database
-├── public/                 # AI-generated images, resume PDF, favicon
-├── scripts/seed.ts         # idempotent bilingual seed script
-├── scripts/resume_pdf.py   # (optional) regenerates public/Atong-Glory-Resume.pdf
+├── public/                 # profile image, generated social card, resume PDF, favicon
+├── scripts/seed.ts         # idempotent local seed; removes known sample claims
+├── scripts/resume_pdf.py   # regenerates the repository-backed resume PDF
+├── requirements.txt        # Python dependencies for image and resume generation
 └── design/reference-design.jpg  # original UI reference this was built from
 ```
 
@@ -156,12 +166,12 @@ The site ships with a complete technical SEO layer:
 | Change my name/roles/text | `src/lib/i18n.tsx` (both `en` and `fr` objects) |
 | Add a project | `scripts/seed.ts` (or insert directly into the `Project` table) |
 | Change colors | `src/app/globals.css` (orange accent = `#f97316` family) & section components |
-| Swap the portrait/images | `public/images/` (keep the same filenames) |
-| Regenerate the resume | `python scripts/resume_pdf.py` then rebuild |
+| Swap the portrait | `public/images/hero-portrait.jpg` |
+| Regenerate the resume | `python scripts/resume_pdf.py` after `python -m pip install -r requirements.txt` |
 | Point at Postgres/MySQL | change `provider` in `prisma/schema.prisma` + `DATABASE_URL`, then `bun run db:push` |
 | Change the site URL for SEO | `.env` → `NEXT_PUBLIC_SITE_URL` (or `src/lib/site.ts` default) |
 | Update social profile links | `src/components/portfolio/hero.tsx`, `footer.tsx` + `src/lib/site.ts` |
-| Regenerate OG image / icons | `python3 scripts/seo_assets.py` |
+| Regenerate OG image / icons | `python scripts/seo_assets.py` after `python -m pip install -r requirements.txt` |
 
 
 ## ☁️ Deploy to Cloudflare (recommended)
@@ -239,4 +249,3 @@ npm run preview      # opennextjs-cloudflare build + wrangler dev
 ## 📄 License
 
 Free to use as a personal portfolio template. Attribution appreciated but not required.
-

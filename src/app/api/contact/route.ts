@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
         success: true,
         id: saved.id,
         receivedAt: saved.createdAt,
-        message: "Message received! I'll get back to you within 24 hours.",
+        message: 'Message received.',
       },
       { status: 201 }
     )

@@ -1,3 +1,19 @@
+export const SAMPLE_PROJECT_SLUGS = [
+  'analytics-dashboard',
+  'e-commerce-platform',
+  'task-management-app',
+] as const
+
+export const SAMPLE_TESTIMONIAL_NAMES = [
+  'Sarah Johnson',
+  'Michael Chen',
+  'Emily Rodriguez',
+] as const
+
+export function isSampleProjectSlug(slug: string): boolean {
+  return (SAMPLE_PROJECT_SLUGS as readonly string[]).includes(slug)
+}
+
 export function slugifyTitle(title: string): string {
   return title
     .toLowerCase()

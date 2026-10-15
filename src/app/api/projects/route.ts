@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server'
 import { getDb } from '@/lib/db'
+import { SAMPLE_PROJECT_SLUGS } from '@/lib/projects'
 
 export async function GET() {
   try {
     const db = await getDb()
     const projects = await db.project.findMany({
-      where: { featured: true },
+      where: { featured: true, slug: { notIn: [...SAMPLE_PROJECT_SLUGS] } },
       orderBy: { sortOrder: 'asc' },
     })
 

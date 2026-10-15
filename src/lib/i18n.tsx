@@ -1,4 +1,4 @@
-// RHIZORA TECH Portfolio — i18n dictionaries (EN / FR)
+// Portfolio i18n dictionaries (EN / FR)
 // Single source of truth for every piece of UI copy on the site.
 // DB-driven content (projects, testimonials) carries parallel FR fields
 // in the database and falls back to English when a translation is missing.
@@ -7,7 +7,7 @@ export type Lang = 'en' | 'fr'
 
 const en = {
   meta: {
-    title: 'Atong Glory — Frontend Developer & Designer | RHIZORA TECH Portfolio',
+    title: 'Atong Glory — Full-Stack Software Engineer',
   },
   nav: {
     skipToContent: 'Skip to content',
@@ -22,32 +22,25 @@ const en = {
   },
   hero: {
     greeting: "Hello, I'm",
-    roles: ['Frontend Developer', 'Graphics Designer', 'UI/UX Designer', 'Problem Solver', 'Tech Enthusiast'],
+    roles: ['Full-Stack Software Engineer', 'TypeScript & React Developer', 'Next.js & Cloudflare Builder'],
     description:
-      'I build exceptional digital experiences with modern technologies. Passionate about clean code, scalable solutions, and turning ideas into reality.',
-    hireMe: 'Hire Me',
-    viewMyWork: 'View My Work',
-    available: 'Available for Freelance',
+      'I build web applications across the interface, server routes, data layer, and deployment—making thoughtful trade-offs and keeping the code easy to work with.',
+    hireMe: 'Discuss an Opportunity',
+    viewMyWork: 'Explore the Build',
     portraitAlt:
-      'Portrait of Atong Glory — Frontend Developer, UI/UX and Graphics Designer',
+      'Portrait of Atong Glory, full-stack software engineer',
   },
   about: {
     label: 'About Me',
     title: (
       <>
-        Building Digital Solutions
-        <br className="hidden sm:block" /> That Make a Difference
+        Product-minded
+        <br className="hidden sm:block" /> Full-Stack Engineering
       </>
     ),
     paragraphs: [
-      "I'm a passionate Frontend Developer & UI/UX Designer with 6+ years of experience crafting web experiences that are fast, accessible, and beautiful. My journey started with curiosity about how the web works, and it has grown into a career of designing and building interfaces used by thousands of people every day.",
-      'I specialize in React, Next.js, TypeScript and Tailwind CSS, and I love turning complex problems into elegant, human-centered designs. From Figma wireframes to pixel-perfect responsive interfaces — and polished brand visuals — I care about every detail of the product and the people who use it.',
-    ],
-    stats: [
-      { value: 6, suffix: '+', label: 'Years Experience' },
-      { value: 40, suffix: '+', label: 'Projects Completed' },
-      { value: 25, suffix: '+', label: 'Happy Clients' },
-      { value: 100, suffix: '%', label: 'Client Satisfaction' },
+      'I’m Atong Glory, a full-stack software engineer interested in building useful, well-structured web applications. I care about understanding the problem, choosing a practical approach, and making the result clear to use and straightforward to maintain.',
+      'This portfolio is a working example: a bilingual Next.js application with typed UI, server routes, database-backed project content, an admin area, and a Cloudflare deployment path. The code and its trade-offs are more useful evidence than unverified performance numbers or client claims.',
     ],
     downloadResume: 'Download Resume',
     info: {
@@ -56,63 +49,55 @@ const en = {
       email: 'Email:',
       location: 'Location:',
       locationValue: 'Douala, Cameroon',
-      availability: 'Availability:',
-      availabilityValue: 'Available for Freelance',
     },
   },
   services: {
-    label: 'What I Do',
-    title: 'My Services',
-    learnMore: 'Learn More',
-    learnMoreAria: (title: string) => `Learn more about ${title}`,
+    label: 'How I Contribute',
+    title: 'Full-Stack Engineering',
+    learnMore: 'Discuss this area',
+    learnMoreAria: (title: string) => `Discuss ${title}`,
     items: [
       {
-        title: 'Web Development',
+        title: 'Frontend & Product UI',
         description:
-          'Fast, responsive websites built with modern technologies — from landing pages and portfolios to complex web platforms.',
+          'Build responsive, accessible interfaces with React and TypeScript, connecting clear interaction design to real product behavior.',
       },
       {
-        title: 'Frontend Development',
+        title: 'Application APIs',
         description:
-          'Responsive and interactive user interfaces with React, Next.js, and Tailwind CSS that feel fast and look stunning.',
+          'Create server-side routes and integrations with explicit validation, useful error handling, and maintainable boundaries.',
       },
       {
-        title: 'UI/UX Design',
+        title: 'Data & Persistence',
         description:
-          'Human-centered interfaces — from research and wireframes to polished Figma prototypes and scalable design systems.',
+          'Model application data and connect it to the product with Prisma, relational databases, and environment-appropriate adapters.',
       },
       {
-        title: 'Graphic Design',
+        title: 'Delivery & Operations',
         description:
-          'Brand identities, logos, marketing visuals and social media designs that make your product unforgettable.',
+          'Bring the pieces together with production builds, deployment configuration, and clear local setup and operating instructions.',
       },
     ],
   },
   skills: {
-    label: 'My Expertise',
-    title: 'Skills & Technologies',
-    proficiencyAria: (name: string) => `${name} proficiency`,
-    bars: [
-      { name: 'JavaScript / TypeScript', level: 95 },
-      { name: 'React & Next.js', level: 92 },
-      { name: 'HTML / CSS / Tailwind', level: 95 },
-      { name: 'UI/UX Design (Figma)', level: 90 },
-      { name: 'Graphic Design (Ps / Ai)', level: 85 },
-      { name: 'Node.js & Databases', level: 78 },
+    label: 'Tools in This Build',
+    title: 'A practical full-stack toolkit',
+    intro: 'These technologies are used in this portfolio repository.',
+    groups: [
+      { title: 'Application', items: ['TypeScript', 'React', 'Next.js', 'Tailwind CSS'] },
+      { title: 'Data & APIs', items: ['Prisma', 'SQLite', 'Cloudflare D1'] },
+      { title: 'Delivery', items: ['Cloudflare Workers', 'OpenNext', 'Git'] },
     ],
-    soft: {
-      strike: 'Soft',
-      real: 'Real Skills',
-      items: ['Leadership', 'Research', 'Reading', 'Communication', 'Emotional Intelligence'],
-      more: 'More',
-    },
   },
   projects: {
-    label: 'Featured Projects',
-    title: 'Some of My Recent Work',
-    viewAll: 'View All Projects',
+    label: 'Selected Build',
+    title: 'A full-stack project you can inspect',
+    viewAll: 'Discuss the build',
     loadingAria: 'Loading projects',
     error: 'Projects are warming up — refresh in a moment.',
+    retry: 'Try again',
+    empty: 'The featured project is being prepared. Please check back soon.',
+    caseStudy: 'Read the case study',
     demoAria: (title: string) => `Open live demo of ${title}`,
     previewAlt: (title: string) => `${title} — web project preview built by Atong Glory`,
     // Category translations for DB-driven categories
@@ -120,6 +105,7 @@ const en = {
       'Data Visualization': 'Data Visualization',
       'E-Commerce': 'E-Commerce',
       Productivity: 'Productivity',
+      'Full-stack Application': 'Full-stack Application',
     } as Record<string, string>,
   },
   testimonials: {
@@ -129,11 +115,11 @@ const en = {
     goToAria: (i: number) => `Go to testimonial ${i}`,
   },
   contact: {
-    label: 'Get In Touch',
+    label: 'Contact',
     title: (
       <>
-        Let&apos;s Build Something
-        <br className="hidden sm:block" /> Amazing Together
+        Let&apos;s Talk About
+        <br className="hidden sm:block" /> Engineering
       </>
     ),
     form: {
@@ -141,13 +127,11 @@ const en = {
       yourNamePlaceholder: 'Your name',
       yourEmail: 'Your Email',
       yourEmailPlaceholder: 'you@example.com',
-      projectType: 'Project Type',
-      projectTypePlaceholder: 'Select project type',
-      budgetRange: 'Budget Range',
-      budgetRangePlaceholder: 'Select budget range',
-      message: 'Tell me about your project...',
-      messagePlaceholder: 'Project goals, timeline, features you need — anything that helps.',
-      send: 'Send Message',
+      projectType: 'Conversation topic',
+      projectTypePlaceholder: 'Select a topic',
+      message: 'Your message',
+      messagePlaceholder: 'Share the role, team, or engineering problem you would like to discuss.',
+      send: 'Send Email',
       sending: 'Sending...',
     },
     validation: {
@@ -157,25 +141,20 @@ const en = {
     },
     toast: {
       sentTitle: 'Message sent!',
-      sentDescription: "Thanks for reaching out — I'll get back to you within 24 hours.",
+      sentDescription: 'Thanks for reaching out. I’ll reply by email.',
       errorTitle: 'Could not send message',
       fallbackDescription: 'Please review the form and try again.',
       networkTitle: 'Network error',
       networkDescription: 'Please check your connection and try again.',
     },
-    projectTypes: ['Web Application', 'E-Commerce Store', 'SaaS Platform', 'UI/UX Design', 'Graphic Design', 'Other'],
-    budgets: ['Under $1,000', '$1,000 – $5,000', '$5,000 – $10,000', '$10,000+'],
+    projectTypes: ['Full-time engineering role', 'Team conversation', 'Project collaboration', 'Other'],
     info: {
       email: 'Email',
-      phone: 'Phone',
       location: 'Location',
-      responseTime: 'Response Time',
-      responseTimeValue: 'Within 24 hours',
     },
-    availabilityCard: {
-      strong: 'Currently available',
-      rest:
-        " for freelance projects and full-time opportunities. Let's turn your idea into a product people love.",
+    conversationCard: {
+      strong: 'Hiring and team conversations',
+      rest: 'I’m glad to discuss the role, product, and engineering problems your team is working on.',
     },
   },
   caseStudy: {
@@ -186,12 +165,10 @@ const en = {
   },
   footer: {
     description:
-      'Frontend Developer & UI/UX Designer building fast, responsive websites and web apps with React, Next.js and TypeScript — digital solutions that drive results and create exceptional user experiences.',
+      'Full-stack software engineer building web applications with TypeScript, React, Next.js, Prisma, and Cloudflare.',
     quickLinks: 'Quick Links',
     services: 'Services',
     followMe: 'Follow Me',
-    visitorPrefixLabel: "You're visitor",
-    visitorSuffix: ' — counted live from the database',
     rights: (year: number) => `© ${year} Atong Glory. All rights reserved.`,
     builtWith: 'Built with ',
     builtWithMiddle: ', Next.js and lots of ',
@@ -202,7 +179,7 @@ export type Dictionary = typeof en
 
 const fr: Dictionary = {
   meta: {
-    title: 'Atong Glory — Développeur Frontend & Designer | Portfolio RHIZORA TECH',
+    title: 'Atong Glory — Ingénieur logiciel full-stack',
   },
   nav: {
     skipToContent: 'Aller au contenu',
@@ -217,32 +194,25 @@ const fr: Dictionary = {
   },
   hero: {
     greeting: 'Bonjour, je suis',
-    roles: ['Développeur Frontend', 'Designer Graphique', 'Designer UI/UX', 'Résolveur de problèmes', 'Passionné de technologie'],
+    roles: ['Ingénieur logiciel full-stack', 'Développeur TypeScript & React', 'Développeur Next.js & Cloudflare'],
     description:
-      'Je crée des expériences numériques exceptionnelles avec des technologies modernes. Passionné par le code propre, les solutions évolutives et la transformation des idées en réalité.',
-    hireMe: 'Embauchez-moi',
-    viewMyWork: 'Voir mes projets',
-    available: 'Disponible pour freelance',
+      'Je développe des applications web de l’interface aux routes serveur, aux données et au déploiement, avec des choix réfléchis et un code facile à maintenir.',
+    hireMe: 'Parlons d’une opportunité',
+    viewMyWork: 'Voir la réalisation',
     portraitAlt:
-      'Portrait d’Atong Glory — développeur frontend et designer UI/UX & graphique',
+      'Portrait d’Atong Glory, ingénieur logiciel full-stack',
   },
   about: {
     label: 'À propos de moi',
     title: (
       <>
-        Construire des solutions numériques
-        <br className="hidden sm:block" /> qui font la différence
+        Ingénierie full-stack
+        <br className="hidden sm:block" /> orientée produit
       </>
     ),
     paragraphs: [
-      'Je suis un développeur frontend et designer UI/UX passionné, avec plus de 6 ans d’expérience dans la création d’expériences web rapides, accessibles et élégantes. Mon parcours a commencé par la curiosité de comprendre le fonctionnement du web, et s’est transformé en une carrière dédiée à la conception d’interfaces utilisées chaque jour par des milliers de personnes.',
-      'Je suis spécialisé en React, Next.js, TypeScript et Tailwind CSS, et j’aime transformer des problèmes complexes en designs élégants, centrés sur l’humain. Des maquettes Figma aux interfaces responsives au pixel près — en passant par des identités visuelles soignées — je me soucie de chaque détail du produit et des personnes qui l’utilisent.',
-    ],
-    stats: [
-      { value: 6, suffix: '+', label: 'Années d’expérience' },
-      { value: 40, suffix: '+', label: 'Projets réalisés' },
-      { value: 25, suffix: '+', label: 'Clients satisfaits' },
-      { value: 100, suffix: '%', label: 'Satisfaction client' },
+      'Je suis Atong Glory, ingénieur logiciel full-stack intéressé par la création d’applications web utiles et bien structurées. Je m’attache à comprendre le problème, choisir une approche pragmatique et produire un résultat clair et facile à maintenir.',
+      'Ce portfolio en est un exemple concret : une application Next.js bilingue avec interface typée, routes serveur, contenu de projets en base de données, espace d’administration et déploiement prévu pour Cloudflare. Le code et ses compromis sont de meilleures preuves que des chiffres ou des références clients non vérifiés.',
     ],
     downloadResume: 'Télécharger le CV',
     info: {
@@ -251,69 +221,62 @@ const fr: Dictionary = {
       email: 'E-mail :',
       location: 'Localisation :',
       locationValue: 'Douala, Cameroun',
-      availability: 'Disponibilité :',
-      availabilityValue: 'Disponible pour freelance',
     },
   },
   services: {
-    label: 'Ce que je fais',
-    title: 'Mes services',
-    learnMore: 'En savoir plus',
-    learnMoreAria: (title: string) => `En savoir plus sur ${title}`,
+    label: 'Ma contribution',
+    title: 'Ingénierie full-stack',
+    learnMore: 'Discuter de ce domaine',
+    learnMoreAria: (title: string) => `Discuter de ${title}`,
     items: [
       {
-        title: 'Développement Web',
+        title: 'Interface et produit',
         description:
-          'Sites web rapides et responsives construits avec des technologies modernes — des pages d’atterrissage et portfolios aux plateformes web complexes.',
+          'Créer des interfaces accessibles et adaptatives avec React et TypeScript, en reliant les interactions aux besoins réels du produit.',
       },
       {
-        title: 'Développement Frontend',
+        title: 'API applicatives',
         description:
-          'Interfaces utilisateur réactives et interactives avec React, Next.js et Tailwind CSS, à la fois rapides et spectaculaires.',
+          'Développer des routes serveur et intégrations avec validation explicite, erreurs utiles et limites maintenables.',
       },
       {
-        title: 'Design UI/UX',
+        title: 'Données et persistance',
         description:
-          'Interfaces centrées sur l’humain — de la recherche et des wireframes aux prototypes Figma aboutis et aux design systems évolutifs.',
+          'Modéliser les données et les relier au produit avec Prisma, des bases relationnelles et des adaptateurs adaptés à l’environnement.',
       },
       {
-        title: 'Design Graphique',
+        title: 'Livraison et exploitation',
         description:
-          'Identités de marque, logos, visuels marketing et designs pour réseaux sociaux qui rendent votre produit inoubliable.',
+          'Assembler les éléments avec des builds de production, une configuration de déploiement et des instructions de développement claires.',
       },
     ],
   },
   skills: {
-    label: 'Mon expertise',
-    title: 'Compétences & Technologies',
-    proficiencyAria: (name: string) => `Niveau en ${name}`,
-    bars: [
-      { name: 'JavaScript / TypeScript', level: 95 },
-      { name: 'React & Next.js', level: 92 },
-      { name: 'HTML / CSS / Tailwind', level: 95 },
-      { name: 'Design UI/UX (Figma)', level: 90 },
-      { name: 'Design Graphique (Ps / Ai)', level: 85 },
-      { name: 'Node.js & Bases de données', level: 78 },
+    label: 'Technologies de ce projet',
+    title: 'Un ensemble d’outils full-stack',
+    intro: 'Ces technologies sont utilisées dans le dépôt de ce portfolio.',
+    groups: [
+      { title: 'Application', items: ['TypeScript', 'React', 'Next.js', 'Tailwind CSS'] },
+      { title: 'Données et API', items: ['Prisma', 'SQLite', 'Cloudflare D1'] },
+      { title: 'Livraison', items: ['Cloudflare Workers', 'OpenNext', 'Git'] },
     ],
-    soft: {
-      strike: 'Soft',
-      real: 'Real Skills',
-      items: ['Leadership', 'Recherche', 'Lecture', 'Communication', 'Intelligence émotionnelle'],
-      more: 'Plus',
-    },
   },
   projects: {
-    label: 'Projets à la une',
-    title: 'Quelques-uns de mes travaux récents',
-    viewAll: 'Voir tous les projets',
+    label: 'Réalisation choisie',
+    title: 'Un projet full-stack à examiner',
+    viewAll: 'Discuter du projet',
     loadingAria: 'Chargement des projets',
     error: 'Les projets arrivent — actualisez dans un instant.',
+    retry: 'Réessayer',
+    empty: 'Le projet présenté est en préparation. Revenez bientôt.',
+    caseStudy: 'Lire le cas pratique',
     demoAria: (title: string) => `Ouvrir la démo de ${title}`,
     previewAlt: (title: string) => `Aperçu du projet web ${title} — réalisé par Atong Glory`,
     categories: {
       'Data Visualization': 'Visualisation de données',
       'E-Commerce': 'E-Commerce',
       Productivity: 'Productivité',
+      'Full-stack Application': 'Application full-stack',
     } as Record<string, string>,
   },
   testimonials: {
@@ -323,11 +286,11 @@ const fr: Dictionary = {
     goToAria: (i: number) => `Aller au témoignage ${i}`,
   },
   contact: {
-    label: 'Restons en contact',
+    label: 'Contact',
     title: (
       <>
-        Construisons quelque chose
-        <br className="hidden sm:block" /> d’extraordinaire ensemble
+        Parlons
+        <br className="hidden sm:block" /> d’ingénierie
       </>
     ),
     form: {
@@ -335,12 +298,10 @@ const fr: Dictionary = {
       yourNamePlaceholder: 'Votre nom',
       yourEmail: 'Votre e-mail',
       yourEmailPlaceholder: 'vous@exemple.com',
-      projectType: 'Type de projet',
-      projectTypePlaceholder: 'Sélectionnez le type de projet',
-      budgetRange: 'Fourchette de budget',
-      budgetRangePlaceholder: 'Sélectionnez votre budget',
-      message: 'Parlez-moi de votre projet...',
-      messagePlaceholder: 'Objectifs, calendrier, fonctionnalités nécessaires — tout ce qui peut aider.',
+      projectType: 'Sujet de discussion',
+      projectTypePlaceholder: 'Choisissez un sujet',
+      message: 'Votre message',
+      messagePlaceholder: 'Présentez le poste, l’équipe ou le problème technique dont vous souhaitez discuter.',
       send: 'Envoyer le message',
       sending: 'Envoi en cours...',
     },
@@ -351,25 +312,20 @@ const fr: Dictionary = {
     },
     toast: {
       sentTitle: 'Message envoyé !',
-      sentDescription: 'Merci de m’avoir contacté — je vous répondrai sous 24 heures.',
+      sentDescription: 'Merci pour votre message. Je vous répondrai par e-mail.',
       errorTitle: 'Impossible d’envoyer le message',
       fallbackDescription: 'Veuillez vérifier le formulaire et réessayer.',
       networkTitle: 'Erreur réseau',
       networkDescription: 'Veuillez vérifier votre connexion et réessayer.',
     },
-    projectTypes: ['Application Web', 'Boutique E-Commerce', 'Plateforme SaaS', 'Design UI/UX', 'Design Graphique', 'Autre'],
-    budgets: ['Moins de 1 000 $', '1 000 $ – 5 000 $', '5 000 $ – 10 000 $', 'Plus de 10 000 $'],
+    projectTypes: ['Poste d’ingénieur logiciel', 'Discussion avec une équipe', 'Collaboration sur un projet', 'Autre'],
     info: {
       email: 'E-mail',
-      phone: 'Téléphone',
       location: 'Localisation',
-      responseTime: 'Délai de réponse',
-      responseTimeValue: 'Sous 24 heures',
     },
-    availabilityCard: {
-      strong: 'Actuellement disponible',
-      rest:
-        ' pour des missions freelance et des postes à temps plein. Transformons votre idée en un produit que les gens adorent.',
+    conversationCard: {
+      strong: 'Discussions de recrutement et d’équipe',
+      rest: 'Je serais heureux d’échanger sur le poste, le produit et les défis techniques de votre équipe.',
     },
   },
   caseStudy: {
@@ -380,12 +336,10 @@ const fr: Dictionary = {
   },
   footer: {
     description:
-      'Développeur Frontend & Designer UI/UX — création de sites web et d’applications rapides et responsives avec React, Next.js et TypeScript. Des solutions numériques qui génèrent des résultats et des expériences utilisateur exceptionnelles.',
+      'Ingénieur logiciel full-stack qui développe des applications web avec TypeScript, React, Next.js, Prisma et Cloudflare.',
     quickLinks: 'Liens rapides',
     services: 'Services',
     followMe: 'Suivez-moi',
-    visitorPrefixLabel: 'Vous êtes le visiteur',
-    visitorSuffix: ' — comptabilisé en direct depuis la base de données',
     rights: (year: number) => `© ${year} Atong Glory. Tous droits réservés.`,
     builtWith: 'Construit avec ',
     builtWithMiddle: ', Next.js et beaucoup de ',

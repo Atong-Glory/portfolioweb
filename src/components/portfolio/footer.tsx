@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { Github, Linkedin, Twitter, Mail, Eye, Heart, Coffee } from 'lucide-react'
+import { Github, Linkedin, Twitter, Mail, Heart, Coffee } from 'lucide-react'
 import { useI18n } from './language-provider'
 
 const SOCIALS = [
@@ -13,7 +12,6 @@ const SOCIALS = [
 
 export function Footer() {
   const { t } = useI18n()
-  const [views, setViews] = useState<number | null>(null)
 
   const QUICK_LINKS = [
     { href: '#home', label: t.nav.home },
@@ -21,21 +19,6 @@ export function Footer() {
     { href: '#services', label: t.nav.services },
     { href: '#projects', label: t.nav.projects },
   ]
-
-  // Live visitor counter — counts this visit once per session (stored in SQLite)
-  useEffect(() => {
-    const counted = sessionStorage.getItem('rt-counted')
-    const url = counted ? '/api/stats' : '/api/stats?count=1'
-    fetch(url)
-      .then((r) => r.json() as Promise<any>)
-      .then((d) => {
-        if (d.success) {
-          setViews(d.views)
-          sessionStorage.setItem('rt-counted', '1')
-        }
-      })
-      .catch(() => {})
-  }, [])
 
   return (
     <footer className="mt-auto border-t border-edge bg-deep">
@@ -45,12 +28,10 @@ export function Footer() {
           <div>
             <a href="#home" className="flex items-center gap-2.5">
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-amber-400 via-orange-500 to-orange-600 shadow-[0_0_20px_rgba(249,115,22,0.4)]">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="#0a0e17" aria-hidden="true">
-                  <path d="M6 4h6.5c4.7 0 7.5 3.2 7.5 8s-2.8 8-7.5 8H6V4zm4.8 4.3v7.4h1.6c2.1 0 3.2-1.7 3.2-3.7s-1.1-3.7-3.2-3.7h-1.6z" />
-                </svg>
+                <span className="font-display text-xs font-extrabold tracking-tight text-[#0a0e17]" aria-hidden="true">AG</span>
               </span>
               <span className="font-display text-lg font-bold tracking-wide text-ink">
-                RHIZORA <span className="text-orange-500">TECH</span>
+                ATONG <span className="text-orange-500">GLORY</span>
               </span>
             </a>
             <p className="mt-4 text-sm leading-relaxed text-soft">
@@ -103,16 +84,6 @@ export function Footer() {
                 </a>
               ))}
             </div>
-            {views !== null && (
-              <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-edge-strong bg-wash px-3.5 py-1.5 text-xs text-soft">
-                <Eye className="h-3.5 w-3.5 text-orange-400" aria-hidden="true" />
-                <span>
-                  {t.footer.visitorPrefixLabel}{' '}
-                  <span className="font-bold text-orange-400">#{views.toLocaleString()}</span>
-                  {t.footer.visitorSuffix}
-                </span>
-              </div>
-            )}
           </div>
         </div>
 

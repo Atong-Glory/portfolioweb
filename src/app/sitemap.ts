@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 import { getDb } from "@/lib/db";
+import { SAMPLE_PROJECT_SLUGS } from "@/lib/projects";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch featured project slugs for individual case-study pages
@@ -8,7 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const db = await getDb()
     const projects = await db.project.findMany({
-      where: { featured: true },
+      where: { featured: true, slug: { notIn: [...SAMPLE_PROJECT_SLUGS] } },
       select: { slug: true, createdAt: true },
       orderBy: { sortOrder: 'asc' },
     })
