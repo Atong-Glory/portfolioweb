@@ -25,8 +25,8 @@
 | **Bilingual interface** | English and French copy with a persistent language toggle. |
 | **Full-stack case study** | The featured work is the portfolio application in this repository, described without fabricated client outcomes or performance figures. |
 | **Projects API** | Project cards and case studies use database-backed content with bilingual descriptions and an explicit empty/error state. |
-| **Contact form** | Bilingual validation, optional Turnstile verification, rate limiting, SQLite/D1 persistence, and optional email notification. |
-| **Admin** | GitHub-authenticated admin routes for portfolio content and the contact inbox. |
+| **Contact form** | Bilingual validation, bounded request payloads, production Turnstile verification, rate limiting, SQLite/D1 persistence, optional email notification, and a 12-month database retention policy. |
+| **Admin** | Allowlisted GitHub admin identity; protected pages and APIs fail closed when the admin username is unset. |
 | **SEO and accessibility** | Metadata, structured data, sitemap, keyboard navigation, reduced-motion support, and responsive layouts. |
 
 ## 🧱 Tech Stack
@@ -37,8 +37,9 @@
 - **Animations**: Framer Motion, CSS keyframes, typing effect
 - **Database**: Prisma ORM — Cloudflare D1 (production) / SQLite file (local development)
 - **Auth**: NextAuth.js v4 with GitHub provider (guards `/admin`)
+- **Admin access**: allowlist-only GitHub login; admin access fails closed when `ADMIN_GITHUB_USERNAME` is unset
 - **Email**: Resend — notifies on every contact form submit
-- **Spam protection**: Cloudflare Turnstile (optional, gracefully disabled when keys not set)
+- **Spam protection**: Cloudflare Turnstile (optional locally; required for contact submissions in production)
 - **Rate limiting**: D1-backed IP bucket (5 msgs / hour per IP)
 - **Validation**: Zod schemas for admin content, server-side contact checks, and TypeScript
 - **Language**: TypeScript throughout
@@ -88,7 +89,7 @@ bun run start        # serves the standalone build on port 3000
 |--------|-------|-------------|
 | `GET` | `/api/projects` | All projects (tags expanded, EN + FR fields) |
 | `GET` | `/api/testimonials` | Published testimonial records (EN + FR fields) |
-| `GET` | `/api/stats?count=1` | Records a home-page visit when `count=1` |
+| `GET` | `/api/stats?count=1` | Returns aggregate visitor and project counts; `count=1` records a home-page visit |
 | `POST` | `/api/contact` | Validate + persist a contact message |
 | `GET` | `/api/contact` | List contact messages (admin/inbox use) |
 
@@ -214,11 +215,15 @@ Add every secret from `.env.example` (the _"Server-only secrets"_ section). At m
 | `NEXTAUTH_SECRET` | `openssl rand -base64 32` |
 | `NEXTAUTH_URL` | your Cloudflare Pages URL or custom domain |
 | `GITHUB_ID` / `GITHUB_SECRET` | github.com/settings/developers → OAuth Apps (callback: `https://<domain>/api/auth/callback/github`) |
-| `ADMIN_GITHUB_USERNAME` | your GitHub username |
-| `ADMIN_API_SECRET` | any random string |
+| `ADMIN_GITHUB_USERNAME` | Required: the only GitHub username allowed to administer the site |
+| `ADMIN_API_SECRET` | Optional server-to-server admin token; use a randomly generated value with at least 32 characters |
 | `RESEND_API_KEY` | resend.com (free tier: 100 emails/day) |
 | `NEXT_PUBLIC_SITE_URL` | your Cloudflare Pages domain or custom domain |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` | Cloudflare Dashboard → Turnstile (free) |
+
+Turnstile may be omitted in local development. In production, configure both keys or contact submissions are intentionally rejected.
+
+Contact messages are automatically removed from the production D1 database after 12 months by a daily Cloudflare Worker Cron Trigger at 03:00 UTC. Expired IP-based rate-limit records are removed by the same job. This cleanup does not delete notification copies already delivered to Resend or the configured mailbox. The public stats endpoint does not expose contact-message counts.
 
 ### Step 5 — Deploy
 

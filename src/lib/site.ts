@@ -8,7 +8,7 @@ export const SITE_NAME = 'Atong Glory — Full-Stack Software Engineer'
 
 export const SITE_EMAIL = 'atongglory17@gmail.com'
 
-export const SITE_LOCATION = 'Douala, Cameroon'
+export const SITE_LOCATION = 'Bamenda, Cameroon'
 
 export const SOCIAL_LINKS = [
   'https://github.com/atongglory',

@@ -19,12 +19,9 @@ export async function GET(req: NextRequest) {
       views = row?.views ?? 0
     }
 
-    const [projects, messages] = await Promise.all([
-      db.project.count(),
-      db.contactMessage.count(),
-    ])
+    const projects = await db.project.count()
 
-    return NextResponse.json({ success: true, views, projects, messages })
+    return NextResponse.json({ success: true, views, projects })
   } catch (err) {
     console.error('[api/stats] failed:', err)
     return NextResponse.json({ success: false, views: 0 }, { status: 500 })

@@ -1,5 +1,6 @@
 import type { NextAuthOptions } from 'next-auth'
 import GitHubProvider from 'next-auth/providers/github'
+import { getGithubLogin, isAllowedAdminLogin } from '@/lib/admin-identity'
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -11,9 +12,21 @@ export const authOptions: NextAuthOptions = {
   session: { strategy: 'jwt' },
   callbacks: {
     async signIn({ profile }) {
-      const allowed = process.env.ADMIN_GITHUB_USERNAME
-      if (!allowed) return true
-      return (profile as any)?.login === allowed
+      return isAllowedAdminLogin(
+        getGithubLogin(profile),
+        process.env.ADMIN_GITHUB_USERNAME
+      )
+    },
+    async jwt({ token, profile }) {
+      if (profile) {
+        const login = getGithubLogin(profile)
+        if (isAllowedAdminLogin(login, process.env.ADMIN_GITHUB_USERNAME) && login) {
+          token.githubLogin = login
+        } else {
+          delete token.githubLogin
+        }
+      }
+      return token
     },
   },
   pages: {

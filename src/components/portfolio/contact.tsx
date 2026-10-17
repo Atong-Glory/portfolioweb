@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { Mail, MapPin, Send, Loader2 } from 'lucide-react'
 import { Reveal, SectionHeader } from './shared'
 import { useI18n } from './language-provider'
@@ -17,13 +17,13 @@ import {
 } from '@/components/ui/select'
 import { useToast } from '@/hooks/use-toast'
 import { SITE_EMAIL } from '@/lib/site'
+import {
+  CONTACT_FIELD_ORDER,
+  validateContactForm,
+  type ContactFormValues,
+} from '@/lib/contact-form-validation'
 
-type FormState = {
-  name: string
-  email: string
-  projectType: string
-  message: string
-}
+type FormState = ContactFormValues
 
 const INITIAL: FormState = {
   name: '',
@@ -45,6 +45,16 @@ export function Contact() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({})
   const [submitting, setSubmitting] = useState(false)
   const [turnstileToken, setTurnstileToken] = useState<string | undefined>(undefined)
+  const [formNotice, setFormNotice] = useState<{
+    type: 'success' | 'error'
+    message: string
+  } | null>(null)
+  const fieldRefs = useRef<Record<keyof FormState, HTMLElement | null>>({
+    name: null,
+    email: null,
+    projectType: null,
+    message: null,
+  })
 
   const handleTurnstileToken = useCallback((token: string | undefined) => {
     setTurnstileToken(token)
@@ -68,21 +78,35 @@ export function Contact() {
   const set = (key: keyof FormState, value: string) => {
     setForm((f) => ({ ...f, [key]: value }))
     setErrors((e) => ({ ...e, [key]: undefined }))
+    setFormNotice(null)
+  }
+
+  const focusFirstError = (nextErrors: Partial<Record<keyof FormState, string>>) => {
+    const firstInvalidField = CONTACT_FIELD_ORDER.find((field) => nextErrors[field])
+    if (firstInvalidField) fieldRefs.current[firstInvalidField]?.focus()
   }
 
   const validate = (): boolean => {
-    const next: Partial<Record<keyof FormState, string>> = {}
-    if (form.name.trim().length < 2) next.name = t.contact.validation.name
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) next.email = t.contact.validation.email
-    if (form.message.trim().length < 10) next.message = t.contact.validation.message
-    setErrors(next)
-    return Object.keys(next).length === 0
+    const issues = validateContactForm(form)
+    const nextErrors: Partial<Record<keyof FormState, string>> = {}
+    for (const field of CONTACT_FIELD_ORDER) {
+      const issue = issues[field]
+      if (issue) nextErrors[field] = t.contact.validation[issue]
+    }
+    setErrors(nextErrors)
+    if (Object.keys(nextErrors).length > 0) {
+      setFormNotice({ type: 'error', message: t.contact.validation.form })
+      focusFirstError(nextErrors)
+      return false
+    }
+    return true
   }
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!validate()) return
 
+    setFormNotice(null)
     setSubmitting(true)
     try {
       const res = await fetch('/api/contact', {
@@ -98,21 +122,28 @@ export function Contact() {
           description: t.contact.toast.sentDescription,
           variant: 'default',
         })
+        setFormNotice({ type: 'success', message: t.contact.toast.sentDescription })
         setForm(INITIAL)
         setTurnstileToken(undefined)
       } else {
-        // Surface server-side field errors if present
-        if (data.errors) setErrors(data.errors)
+        const serverErrors = data.errors ?? {}
+        const errorMessage =
+          Object.values(serverErrors).find(Boolean) ??
+          data.message ??
+          t.contact.toast.fallbackDescription
+        if (data.errors) {
+          setErrors(serverErrors)
+          focusFirstError(serverErrors)
+        }
+        setFormNotice({ type: 'error', message: errorMessage })
         toast({
           title: t.contact.toast.errorTitle,
-          description:
-            (Object.values(data.errors ?? {})[0] as string) ??
-            data.message ??
-            t.contact.toast.fallbackDescription,
+          description: errorMessage,
           variant: 'destructive',
         })
       }
     } catch {
+      setFormNotice({ type: 'error', message: t.contact.toast.networkDescription })
       toast({
         title: t.contact.toast.networkTitle,
         description: t.contact.toast.networkDescription,
@@ -139,46 +170,80 @@ export function Contact() {
         <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_360px] lg:gap-14">
           {/* Form */}
           <Reveal>
-            <form onSubmit={onSubmit} noValidate className="space-y-5">
+            <form onSubmit={onSubmit} noValidate aria-busy={submitting} className="space-y-5">
+              <p className="text-sm text-soft">{t.contact.form.requiredFieldsNote}</p>
+              {formNotice && (
+                <p
+                  role={formNotice.type === 'error' ? 'alert' : 'status'}
+                  aria-live={formNotice.type === 'error' ? 'assertive' : 'polite'}
+                  aria-atomic="true"
+                  className={
+                    formNotice.type === 'error'
+                      ? 'rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300'
+                      : 'rounded-lg border border-green-500/30 bg-green-500/10 px-4 py-3 text-sm text-green-300'
+                  }
+                >
+                  {formNotice.message}
+                </p>
+              )}
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-body">
                     {t.contact.form.yourName}
+                    <span aria-hidden="true" className="text-orange-400">({t.contact.form.required})</span>
                   </Label>
                   <Input
                     id="name"
+                    ref={(element) => { fieldRefs.current.name = element }}
                     value={form.name}
                     onChange={(e) => set('name', e.target.value)}
                     placeholder={t.contact.form.yourNamePlaceholder}
                     autoComplete="name"
+                    required
+                    maxLength={120}
                     className="h-12 border-edge-strong bg-panel text-ink placeholder:text-faint focus-visible:ring-orange-500/50 focus-visible:border-orange-500/50"
                     aria-invalid={!!errors.name}
+                    aria-describedby={errors.name ? 'name-error' : undefined}
                   />
-                  {errors.name && <p className="text-xs text-red-400">{errors.name}</p>}
+                  {errors.name && <p id="name-error" className="text-xs text-red-400">{errors.name}</p>}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-body">
                     {t.contact.form.yourEmail}
+                    <span aria-hidden="true" className="text-orange-400">({t.contact.form.required})</span>
                   </Label>
                   <Input
                     id="email"
+                    ref={(element) => { fieldRefs.current.email = element }}
                     type="email"
                     inputMode="email"
                     value={form.email}
                     onChange={(e) => set('email', e.target.value)}
                     placeholder={t.contact.form.yourEmailPlaceholder}
                     autoComplete="email"
+                    required
+                    maxLength={254}
                     className="h-12 border-edge-strong bg-panel text-ink placeholder:text-faint focus-visible:ring-orange-500/50 focus-visible:border-orange-500/50"
                     aria-invalid={!!errors.email}
+                    aria-describedby={errors.email ? 'email-error' : undefined}
                   />
-                  {errors.email && <p className="text-xs text-red-400">{errors.email}</p>}
+                  {errors.email && <p id="email-error" className="text-xs text-red-400">{errors.email}</p>}
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-body">{t.contact.form.projectType}</Label>
+                <Label htmlFor="projectType" className="text-body">
+                  {t.contact.form.projectType}{' '}
+                  <span className="text-soft">({t.contact.form.optional})</span>
+                </Label>
                 <Select value={form.projectType} onValueChange={(v) => set('projectType', v)}>
-                  <SelectTrigger className="h-12 border-edge-strong bg-panel text-ink data-[placeholder]:text-faint focus:ring-orange-500/50">
+                  <SelectTrigger
+                    id="projectType"
+                    ref={(element) => { fieldRefs.current.projectType = element }}
+                    aria-invalid={!!errors.projectType}
+                    aria-describedby={errors.projectType ? 'projectType-error' : undefined}
+                    className="h-12 border-edge-strong bg-panel text-ink data-[placeholder]:text-faint focus:ring-orange-500/50"
+                  >
                     <SelectValue placeholder={t.contact.form.projectTypePlaceholder} />
                   </SelectTrigger>
                   <SelectContent className="border-edge-strong bg-panel text-ink">
@@ -189,26 +254,47 @@ export function Contact() {
                     ))}
                   </SelectContent>
                 </Select>
+                {errors.projectType && (
+                  <p id="projectType-error" className="text-xs text-red-400">{errors.projectType}</p>
+                )}
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="message" className="text-body">
                   {t.contact.form.message}
+                  <span aria-hidden="true" className="text-orange-400">({t.contact.form.required})</span>
+                  <span aria-hidden="true" className="ml-auto text-xs font-normal text-soft">
+                    {t.contact.form.messageCount(form.message.length, 5000)}
+                  </span>
                 </Label>
                 <Textarea
                   id="message"
+                  ref={(element) => { fieldRefs.current.message = element }}
                   value={form.message}
                   onChange={(e) => set('message', e.target.value)}
                   placeholder={t.contact.form.messagePlaceholder}
                   rows={5}
+                  required
+                  maxLength={5000}
                   className="min-h-[130px] resize-none border-edge-strong bg-panel text-ink placeholder:text-faint focus-visible:ring-orange-500/50 focus-visible:border-orange-500/50"
                   aria-invalid={!!errors.message}
+                  aria-describedby={errors.message ? 'message-error' : undefined}
                 />
-                {errors.message && <p className="text-xs text-red-400">{errors.message}</p>}
+                {errors.message && <p id="message-error" className="text-xs text-red-400">{errors.message}</p>}
               </div>
 
               {/* Cloudflare Turnstile — renders only when NEXT_PUBLIC_TURNSTILE_SITE_KEY is set */}
               <TurnstileWidget onToken={handleTurnstileToken} />
+
+              <p className="text-xs leading-relaxed text-soft">
+                {t.contact.form.privacyNotice}{' '}
+                <a
+                  href={`mailto:${SITE_EMAIL}`}
+                  className="font-medium text-orange-400 underline underline-offset-2 hover:text-orange-300"
+                >
+                  {SITE_EMAIL}
+                </a>
+              </p>
 
               <button
                 type="submit"

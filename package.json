@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
-    "test": "node --import tsx --test src/lib/projects.test.ts src/lib/admin-content-schemas.test.ts",
+    "test": "node --import tsx --test src/lib/projects.test.ts src/lib/admin-content-schemas.test.ts src/lib/admin-identity.test.ts src/lib/request-schemas.test.ts src/lib/limited-json.test.ts src/lib/rate-limit.test.ts src/lib/turnstile.test.ts src/lib/contact-retention.test.ts src/lib/contact-form-validation.test.ts",
     "build:standalone": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
     "start": "NODE_ENV=production node .next/standalone/server.js",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",

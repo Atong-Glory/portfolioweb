@@ -4,37 +4,32 @@ import { requireAdmin } from '@/lib/admin-auth'
 import { allowContactSubmission, getClientIp } from '@/lib/rate-limit'
 import { notifyContactLead } from '@/lib/email'
 import { verifyTurnstileToken } from '@/lib/turnstile'
+import { contactReadStatusSchema, contactSubmissionSchema } from '@/lib/request-schemas'
+import { readLimitedJsonBody } from '@/lib/limited-json'
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const MAX_CONTACT_BODY_BYTES = 12 * 1024
+const MAX_STATUS_BODY_BYTES = 1024
 
 export async function POST(req: NextRequest) {
   try {
-    const body = (await req.json()) as any
-    const { name, email, projectType, budgetRange, message, turnstileToken } = body ?? {}
-
-    const turnstileOk = await verifyTurnstileToken(
-      typeof turnstileToken === 'string' ? turnstileToken : undefined
-    )
-    if (!turnstileOk) {
+    const body = await readLimitedJsonBody(req, MAX_CONTACT_BODY_BYTES)
+    if (!body.success) {
       return NextResponse.json(
-        { success: false, message: 'Security verification failed. Please try again.' },
-        { status: 403 }
+        { success: false, message: body.message },
+        { status: body.status }
       )
     }
 
-    const errors: Record<string, string> = {}
-    if (!name || typeof name !== 'string' || name.trim().length < 2) {
-      errors.name = 'Please enter your name (min 2 characters).'
-    }
-    if (!email || typeof email !== 'string' || !EMAIL_RE.test(email)) {
-      errors.email = 'Please enter a valid email address.'
-    }
-    if (!message || typeof message !== 'string' || message.trim().length < 10) {
-      errors.message = 'Tell me a bit more about your project (min 10 characters).'
-    }
-
-    if (Object.keys(errors).length > 0) {
-      return NextResponse.json({ success: false, errors }, { status: 400 })
+    const parsed = contactSubmissionSchema.safeParse(body.value)
+    if (!parsed.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Please check the submitted fields.',
+          errors: parsed.error.flatten().fieldErrors,
+        },
+        { status: 400 }
+      )
     }
 
     const db = await getDb()
@@ -50,15 +45,21 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    const turnstileOk = await verifyTurnstileToken(parsed.data.turnstileToken)
+    if (!turnstileOk) {
+      return NextResponse.json(
+        { success: false, message: 'Security verification failed. Please try again.' },
+        { status: 403 }
+      )
+    }
+
     const saved = await db.contactMessage.create({
       data: {
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        projectType:
-          typeof projectType === 'string' && projectType ? projectType : 'Not specified',
-        budgetRange:
-          typeof budgetRange === 'string' && budgetRange ? budgetRange : 'Not specified',
-        message: message.trim(),
+        name: parsed.data.name,
+        email: parsed.data.email.toLowerCase(),
+        projectType: parsed.data.projectType || 'Not specified',
+        budgetRange: parsed.data.budgetRange || 'Not specified',
+        message: parsed.data.message,
       },
     })
 
@@ -112,7 +113,10 @@ export async function GET(req: NextRequest) {
         },
       }),
     ])
-    return NextResponse.json({ success: true, stats: { total, unread }, latest })
+    return NextResponse.json(
+      { success: true, stats: { total, unread }, latest },
+      { headers: { 'Cache-Control': 'no-store' } }
+    )
   } catch (err) {
     console.error('[api/contact] read failed:', err)
     return NextResponse.json({ success: false }, { status: 500 })
@@ -124,16 +128,26 @@ export async function PATCH(req: NextRequest) {
   if (denied) return denied
 
   try {
-    const body = (await req.json()) as any
-    const { id, isRead } = body ?? {}
-    if (!id || typeof id !== 'string') {
-      return NextResponse.json({ success: false, message: 'Missing id' }, { status: 400 })
+    const body = await readLimitedJsonBody(req, MAX_STATUS_BODY_BYTES)
+    if (!body.success) {
+      return NextResponse.json(
+        { success: false, message: body.message },
+        { status: body.status }
+      )
+    }
+
+    const parsed = contactReadStatusSchema.safeParse(body.value)
+    if (!parsed.success) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid contact status update.' },
+        { status: 400 }
+      )
     }
 
     const db = await getDb()
     const updated = await db.contactMessage.update({
-      where: { id },
-      data: { isRead: !!isRead },
+      where: { id: parsed.data.id },
+      data: { isRead: parsed.data.isRead },
     })
     return NextResponse.json({ success: true, message: updated })
   } catch (err) {

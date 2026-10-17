@@ -10,29 +10,27 @@ export async function allowContactSubmission(
   const now = new Date()
   const expiresAt = new Date(now.getTime() + CONTACT_WINDOW_MS)
 
-  const existing = await db.rateLimitBucket.findUnique({ where: { id: clientKey } })
-  if (!existing || existing.expiresAt < now) {
-    await db.rateLimitBucket.upsert({
-      where: { id: clientKey },
-      create: { id: clientKey, count: 1, expiresAt },
-      update: { count: 1, expiresAt },
-    })
+  await db.rateLimitBucket.upsert({
+    where: { id: clientKey },
+    create: { id: clientKey, count: 0, expiresAt },
+    update: {},
+  })
+
+  const reset = await db.rateLimitBucket.updateMany({
+    where: { id: clientKey, expiresAt: { lte: now } },
+    data: { count: 1, expiresAt },
+  })
+  if (reset.count === 1) {
     return true
   }
 
-  if (existing.count >= CONTACT_LIMIT) return false
-
-  await db.rateLimitBucket.update({
-    where: { id: clientKey },
+  const increment = await db.rateLimitBucket.updateMany({
+    where: { id: clientKey, expiresAt: { gt: now }, count: { lt: CONTACT_LIMIT } },
     data: { count: { increment: 1 } },
   })
-  return true
+  return increment.count === 1
 }
 
 export function getClientIp(req: Request): string {
-  const cf = req.headers.get('cf-connecting-ip')
-  if (cf) return cf
-  const forwarded = req.headers.get('x-forwarded-for')
-  if (forwarded) return forwarded.split(',')[0]?.trim() ?? 'unknown'
-  return 'unknown'
+  return req.headers.get('cf-connecting-ip')?.trim() || 'unknown'
 }
